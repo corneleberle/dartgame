@@ -10,6 +10,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+import com.namics.lab.dartgame.chat.ChatWebSocketHandler;
 import com.namics.lab.dartgame.echo.DefaultEchoService;
 import com.namics.lab.dartgame.echo.EchoWebSocketHandler;
 
@@ -24,6 +25,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 		registry.addHandler(echoWebSocketHandler(), "/echo");
 		// registry.addHandler(snakeWebSocketHandler(), "/snake");
 
+		registry.addHandler(chatWebSocketHandler(), "/chat");
+
 		registry.addHandler(echoWebSocketHandler(), "/sockjs/echo").withSockJS();
 		// registry.addHandler(snakeWebSocketHandler(), "/sockjs/snake").withSockJS();
 	}
@@ -31,6 +34,11 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	@Bean
 	public WebSocketHandler echoWebSocketHandler() {
 		return new EchoWebSocketHandler(echoService());
+	}
+
+	@Bean
+	public WebSocketHandler chatWebSocketHandler() {
+		return new ChatWebSocketHandler();
 	}
 
 	// @Bean
