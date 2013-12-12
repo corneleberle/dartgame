@@ -1,4 +1,4 @@
-package com.namics.lab.dartgame.chat.message;
+package com.namics.lab.dartgame.message;
 
 import java.util.Date;
 
