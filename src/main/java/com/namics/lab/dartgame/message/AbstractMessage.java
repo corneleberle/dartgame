@@ -2,7 +2,7 @@ package com.namics.lab.dartgame.message;
 
 import java.util.Date;
 
-public abstract class Message {
+public abstract class AbstractMessage {
 
 	private Date sent;
 

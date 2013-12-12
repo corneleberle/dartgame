@@ -1,6 +1,6 @@
 package com.namics.lab.dartgame.message;
 
-public class ConnectMessage extends Message {
+public class ConnectMessage extends AbstractMessage {
 
 	private String name;
 
