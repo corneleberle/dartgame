@@ -40,18 +40,15 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		AbstractMessage msg = mapper.readValue("{\"messageType\":\"CONNECT\",\"sender\":\"tester\",\"name\":\"test\",\"sent\":\"2011-04-08T09:00:00\"}",
-				AbstractMessage.class);
 		// Message msg = mapper.readValue(message.getPayload(), Message.class);
+		AbstractMessage connectMessage = mapper.readValue(
+				"{\"messageType\":\"CONNECT\",\"sender\":\"tester\",\"name\":\"test\",\"sent\":\"2011-04-08T09:00:00\"}", AbstractMessage.class);
+		AbstractMessage shotMessage = mapper.readValue("{\"messageType\":\"SHOT_REQUEST\",\"sender\":\"tester\",\"sent\":\"2011-04-08T09:00:00\"}",
+				AbstractMessage.class);
 
-		delegateMessageHandler.delegate(session, msg);
-
-		// for (WebSocketSession otherSession : sessions) {
-		// if (!otherSession.equals(session)) {
-		// String echoMessage = message.getPayload();
-		// otherSession.sendMessage(new TextMessage(echoMessage));
-		// }
-		// }
+		delegateMessageHandler.delegate(session, connectMessage);
+		delegateMessageHandler.delegate(session, connectMessage);
+		delegateMessageHandler.delegate(session, shotMessage);
 	}
 
 	public DelegateMessageHandler getDelegateMessageHandler() {

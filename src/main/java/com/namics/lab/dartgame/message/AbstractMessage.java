@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "messageType", visible = true)
 @JsonSubTypes({ @Type(value = ConnectMessage.class, name = "CONNECT"), @Type(value = InitMessage.class, name = "INIT"),
-		@Type(value = InitMessage.class, name = "SHOT_REQUEST"), @Type(value = InitMessage.class, name = "SHOT"),
-		@Type(value = InitMessage.class, name = "SHOT_RESULT"), @Type(value = InitMessage.class, name = "STATUS") })
+		@Type(value = ShotRequestMessage.class, name = "SHOT_REQUEST"), @Type(value = ShotMessage.class, name = "SHOT"),
+		@Type(value = ShotResultMessage.class, name = "SHOT_RESULT"), @Type(value = StatusMessage.class, name = "STATUS") })
 public abstract class AbstractMessage {
 
 	private Date sent;
