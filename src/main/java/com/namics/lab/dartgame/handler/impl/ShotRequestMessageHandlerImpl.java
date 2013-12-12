@@ -24,14 +24,29 @@ public class ShotRequestMessageHandlerImpl implements MessageHandler<ShotRequest
 	public void handle(WebSocketSession session, ShotRequestMessage message) {
 		Game game = gameRepository.getGameForSession(session);
 
+		PlayerType shooter = getShooter(session, game);
+
+		Integer remainingShots = game.getRemainingShots().get(shooter);
+		if (remainingShots != null && remainingShots > 0) {
+			// Update remaining shots
+			game.getRemainingShots().put(shooter, remainingShots - 1);
+
+			// Send shot message
+			int shotId = game.getShotLimit() - remainingShots;
+			sendShotMessage(game, message, shooter, shotId);
+		} else {
+			System.out.println("#### Player [" + shooter + "] has no remaining shots anymore");
+		}
+	}
+
+	private PlayerType getShooter(WebSocketSession session, Game game) {
 		PlayerType shooter = null;
 		if (game.getLeftPlayer().equals(session)) {
 			shooter = PlayerType.LEFT;
 		} else {
 			shooter = PlayerType.RIGHT;
 		}
-
-		sendShotMessage(game, message, shooter, 1);
+		return shooter;
 	}
 
 	private void sendShotMessage(Game game, ShotRequestMessage message, PlayerType shooter, int shotId) {
