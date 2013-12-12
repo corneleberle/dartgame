@@ -8,6 +8,8 @@ public class InitMessage extends AbstractMessage {
 
 	private PlayerType playerType;
 
+	private double[] landscape;
+
 	public double getDuration() {
 		return duration;
 	}
@@ -30,6 +32,14 @@ public class InitMessage extends AbstractMessage {
 
 	public void setPlayerType(PlayerType playerType) {
 		this.playerType = playerType;
+	}
+
+	public double[] getLandscape() {
+		return landscape;
+	}
+
+	public void setLandscape(double[] landscape) {
+		this.landscape = landscape;
 	}
 
 }

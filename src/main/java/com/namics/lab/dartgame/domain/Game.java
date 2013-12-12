@@ -12,6 +12,8 @@ public class Game {
 
 	public final static double DURATION = 60;
 
+	public static final int LANDSCAPE_RESOLUTION = 1000;
+
 	private WebSocketSession leftPlayer;
 
 	private WebSocketSession rightPlayer;
