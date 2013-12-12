@@ -46,9 +46,13 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		AbstractMessage shotMessage = mapper.readValue("{\"messageType\":\"SHOT_REQUEST\",\"sender\":\"tester\",\"sent\":\"2011-04-08T09:00:00\"}",
 				AbstractMessage.class);
 
+		AbstractMessage shotResult = mapper.readValue("{\"messageType\":\"SHOT_RESULT\",\"sender\":\"tester\",\"sent\":\"2011-04-08T09:00:00\"}",
+				AbstractMessage.class);
+
 		delegateMessageHandler.delegate(session, connectMessage);
 		delegateMessageHandler.delegate(session, connectMessage);
 		delegateMessageHandler.delegate(session, shotMessage);
+		delegateMessageHandler.delegate(session, shotResult);
 	}
 
 	public DelegateMessageHandler getDelegateMessageHandler() {
