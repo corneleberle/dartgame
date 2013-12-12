@@ -8,6 +8,10 @@ import com.namics.lab.dartgame.message.PlayerType;
 
 public class Game {
 
+	public final static int NUMBER_OF_BOMBS = 10;
+
+	public final static double DURATION = 60;
+
 	private WebSocketSession leftPlayer;
 
 	private WebSocketSession rightPlayer;
