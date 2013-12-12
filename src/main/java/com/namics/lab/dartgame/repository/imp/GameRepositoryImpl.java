@@ -30,4 +30,9 @@ public class GameRepositoryImpl implements GameRepository {
 		return null;
 	}
 
+	@Override
+	public void removeGame(Game game) {
+		games.remove(game);
+	}
+
 }

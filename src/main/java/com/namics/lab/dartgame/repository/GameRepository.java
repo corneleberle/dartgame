@@ -10,4 +10,6 @@ public interface GameRepository {
 
 	Game getGameForSession(WebSocketSession session);
 
+	void removeGame(Game game);
+
 }
