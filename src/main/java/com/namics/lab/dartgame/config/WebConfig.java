@@ -16,6 +16,7 @@ import com.namics.lab.dartgame.echo.EchoWebSocketHandler;
 import com.namics.lab.dartgame.handler.DelegateMessageHandler;
 import com.namics.lab.dartgame.handler.MessageHandler;
 import com.namics.lab.dartgame.handler.impl.DelegateMessageHandlerImpl;
+import com.namics.lab.dartgame.handler.impl.ShotRequestMessageHandlerImpl;
 import com.namics.lab.dartgame.message.ConnectMessage;
 import com.namics.lab.dartgame.message.InitMessage;
 import com.namics.lab.dartgame.message.ShotMessage;
@@ -76,8 +77,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 
 	@Bean
 	public MessageHandler<ShotRequestMessage> shotRequestMessageHandler() {
-		// TODO implement
-		return null;
+		return new ShotRequestMessageHandlerImpl();
 	}
 
 	@Bean
