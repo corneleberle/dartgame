@@ -13,6 +13,15 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import com.namics.lab.dartgame.chat.ChatWebSocketHandler;
 import com.namics.lab.dartgame.echo.DefaultEchoService;
 import com.namics.lab.dartgame.echo.EchoWebSocketHandler;
+import com.namics.lab.dartgame.handler.DelegateMessageHandler;
+import com.namics.lab.dartgame.handler.MessageHandler;
+import com.namics.lab.dartgame.handler.impl.DelegateMessageHandlerImpl;
+import com.namics.lab.dartgame.message.ConnectMessage;
+import com.namics.lab.dartgame.message.InitMessage;
+import com.namics.lab.dartgame.message.ShotMessage;
+import com.namics.lab.dartgame.message.ShotRequestMessage;
+import com.namics.lab.dartgame.message.ShotResultMessage;
+import com.namics.lab.dartgame.message.StatusMessage;
 
 @Configuration
 @EnableWebMvc
@@ -39,6 +48,54 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	@Bean
 	public WebSocketHandler chatWebSocketHandler() {
 		return new ChatWebSocketHandler();
+	}
+
+	@Bean
+	public DelegateMessageHandler delegateMessageHandler() {
+		DelegateMessageHandlerImpl delegateMessageHandler = new DelegateMessageHandlerImpl();
+		delegateMessageHandler.setConnectMessageHandler(connectMessageHandler());
+		delegateMessageHandler.setInitMessageHandler(initMessageHandler());
+		delegateMessageHandler.setShotRequestMessageHandler(shotRequestMessageHandler());
+		delegateMessageHandler.setShotMessageHandler(shotMessageHandler());
+		delegateMessageHandler.setShotResultMessageHandler(shotResultMessageHandler());
+		delegateMessageHandler.setStatusMessageHandler(statusMessageHandler());
+		return delegateMessageHandler;
+	}
+
+	@Bean
+	public MessageHandler<ConnectMessage> connectMessageHandler() {
+		// TODO implement
+		return null;
+	}
+
+	@Bean
+	public MessageHandler<InitMessage> initMessageHandler() {
+		// TODO implement
+		return null;
+	}
+
+	@Bean
+	public MessageHandler<ShotRequestMessage> shotRequestMessageHandler() {
+		// TODO implement
+		return null;
+	}
+
+	@Bean
+	public MessageHandler<ShotMessage> shotMessageHandler() {
+		// TODO implement
+		return null;
+	}
+
+	@Bean
+	public MessageHandler<ShotResultMessage> shotResultMessageHandler() {
+		// TODO implement
+		return null;
+	}
+
+	@Bean
+	public MessageHandler<StatusMessage> statusMessageHandler() {
+		// TODO implement
+		return null;
 	}
 
 	// @Bean
