@@ -195,6 +195,23 @@ void connect(MouseEvent event) {
         drawMapProfile(landscape);
 
       }
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT){
+        double angle = message["angle"];
+        double power = message["power"];;
+        
+        Cannon enemyCannon = new Cannon();
+        enemyCannon.pos = new Point(0.73, 0.3);
+        enemyCannon.angle = angle;
+        enemyCannon.power = power;
+        
+        //TODO My adapt enemy shot
+        drawShotCurve(enemyCannon);
+        
+      }
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
+        outputMsg("Not Supported by Client!");
+        
+      }
     }
     outputMsg(e.data);
   });
