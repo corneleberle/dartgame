@@ -17,6 +17,12 @@ public class LandscapeServiceImpl implements LandscapeService {
 
 	public static final int LANDSCAPE_RESOLUTION = 1000;
 
+	public static void main(String[] args) {
+		for (Double d : new LandscapeServiceImpl().getLandscape()) {
+			System.out.println(d);
+		}
+	}
+
 	@Override
 	public List<Double> getLandscape() {
 		double[] landscapePoints = new double[PARTS + 1];
@@ -62,9 +68,9 @@ public class LandscapeServiceImpl implements LandscapeService {
 	private double sinusFunction(double from, double to, int numberOfPoints, int x) {
 		// 0.4 / 2 * sin(x/200*PI - (PI / 2)) + 2 * 0.2
 		double a = 0.5 * (to - from);
-		double b = Math.PI / 200;
+		double b = Math.PI / numberOfPoints;
 		double c = -Math.PI / 2;
-		double d = 0.5 * Math.abs(to - from);
+		double d = 0.5 * Math.abs(to - from) + (from < to ? from : to);
 		return a * Math.sin(b * x + c) + d;
 	}
 
