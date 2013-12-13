@@ -1,5 +1,7 @@
 package com.namics.lab.dartgame.handler.impl;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -40,6 +42,10 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 		initMessage.setDuration(Game.DURATION);
 		initMessage.setNumberOfBombs(Game.NUMBER_OF_BOMBS);
 
+		initMessage.setCanonLeftX(Game.CANON_LEFT_X);
+		initMessage.setCanonRightX(Game.CANON_RIGHT_X);
+		initMessage.setWind(getWind());
+
 		initMessage.setLandscape(landscapeService.getLandscape());
 
 		initMessage.setPlayerType(PlayerType.LEFT);
@@ -47,6 +53,10 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 
 		initMessage.setPlayerType(PlayerType.RIGHT);
 		messageService.send(initMessage, game.getRightPlayer());
+	}
+
+	private int getWind() {
+		return new Random().nextInt(Game.WIND_MAX - Game.WIND_MIN + 1) + Game.WIND_MIN;
 	}
 
 	public GameRepository getGameRepository() {

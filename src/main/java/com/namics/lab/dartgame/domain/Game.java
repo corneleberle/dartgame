@@ -5,12 +5,17 @@ import java.util.Map;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.namics.lab.dartgame.message.PlayerType;
+import com.namics.lab.dartgame.service.impl.LandscapeServiceImpl;
 
 public class Game {
 
 	public final static int NUMBER_OF_BOMBS = 10;
-
 	public final static double DURATION = 60;
+	public final static int CANON_LEFT_X = LandscapeServiceImpl.LANDSCAPE_RESOLUTION / LandscapeServiceImpl.PARTS;
+	public final static int CANON_RIGHT_X = LandscapeServiceImpl.LANDSCAPE_RESOLUTION / LandscapeServiceImpl.PARTS * (LandscapeServiceImpl.PARTS - 1);
+
+	public final static int WIND_MIN = -1000;
+	public final static int WIND_MAX = 1000;
 
 	private WebSocketSession leftPlayer;
 
