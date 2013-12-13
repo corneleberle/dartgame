@@ -31,7 +31,7 @@ final int SCALE_Y = CANVAS_HEIGHT;
 final int OFFSET_X = 0;
 final int OFFSET_Y = CANVAS_HEIGHT;
 
-final List<double> landscape = new List(1000);
+List<double> landscape = new List(1000);
 
 
 
@@ -49,10 +49,8 @@ void main() {
   
   // init
   myCannon.pos = new Point(0.13, 0.3);
-  fillLandscape(landscape);
+  //fillLandscape(landscape);
 
-  context.clearRect(0, 0, SCALE_X, SCALE_Y);
-  drawMapProfile(landscape);
 }
 
 
@@ -173,7 +171,13 @@ void connect(MouseEvent event) {
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
-    outputMsg('Received message: ${e.data}');
+    Map data = JSON.decode(e.data);
+    List<double> landscape2 = data["landscape"];
+    landscape = landscape2;
+    
+    context.clearRect(0, 0, SCALE_X, SCALE_Y);
+    drawMapProfile(landscape);
+
   });
 }
 

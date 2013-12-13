@@ -11,7 +11,7 @@ import com.namics.lab.dartgame.service.LandscapeService;
 @Service
 public class LandscapeServiceImpl implements LandscapeService {
 
-	private static final int PARTS = 5;
+	private static final int PARTS = 10;
 
 	private static final double MAX_HEIGHT = 0.6;
 
