@@ -23,8 +23,6 @@ public class Game {
 
 	private Map<PlayerType, Integer> remainingShots;
 
-	private int shotLimit;
-
 	public WebSocketSession getLeftPlayer() {
 		return leftPlayer;
 	}
@@ -47,14 +45,6 @@ public class Game {
 
 	public void setRemainingShots(Map<PlayerType, Integer> remainingShots) {
 		this.remainingShots = remainingShots;
-	}
-
-	public int getShotLimit() {
-		return shotLimit;
-	}
-
-	public void setShotLimit(int shotLimit) {
-		this.shotLimit = shotLimit;
 	}
 
 }

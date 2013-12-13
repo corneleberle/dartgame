@@ -6,6 +6,8 @@ import org.springframework.web.socket.WebSocketSession;
 import com.namics.lab.dartgame.domain.Game;
 import com.namics.lab.dartgame.handler.MessageHandler;
 import com.namics.lab.dartgame.message.ShotResultMessage;
+import com.namics.lab.dartgame.message.StatusMessage;
+import com.namics.lab.dartgame.message.StatusType;
 import com.namics.lab.dartgame.repository.GameRepository;
 import com.namics.lab.dartgame.service.GameService;
 import com.namics.lab.dartgame.service.MessageService;
@@ -29,6 +31,21 @@ public class ShotResultMessageHandler implements MessageHandler<ShotResultMessag
 		shotResultMessage.setStrike(true);
 
 		this.messageService.send(shotResultMessage, receiver);
+
+		if (message.isStrike()) {
+			sendEndGameStatus(receiver, session);
+			this.getGameRepository().removeGame(game);
+		}
+	}
+
+	private void sendEndGameStatus(WebSocketSession winner, WebSocketSession loser) {
+		StatusMessage winnerMessage = new StatusMessage();
+		winnerMessage.setStatusType(StatusType.WINNER);
+		this.messageService.send(winnerMessage, winner);
+
+		StatusMessage loserMessage = new StatusMessage();
+		loserMessage.setStatusType(StatusType.LOSER);
+		this.messageService.send(loserMessage, loser);
 	}
 
 	public GameRepository getGameRepository() {

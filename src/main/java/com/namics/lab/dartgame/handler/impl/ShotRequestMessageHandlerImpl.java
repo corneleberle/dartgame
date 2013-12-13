@@ -32,7 +32,7 @@ public class ShotRequestMessageHandlerImpl implements MessageHandler<ShotRequest
 			game.getRemainingShots().put(shooter, remainingShots - 1);
 
 			// Send shot message
-			int shotId = game.getShotLimit() - remainingShots;
+			int shotId = Game.NUMBER_OF_BOMBS - remainingShots;
 			sendShotMessage(game, message, shooter, shotId);
 		} else {
 			System.out.println("#### Player [" + shooter + "] has no remaining shots anymore");
