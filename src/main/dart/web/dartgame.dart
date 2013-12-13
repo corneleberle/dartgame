@@ -41,7 +41,8 @@ List<double> landscape = new List(1000);
 
 final myCannon = new Cannon();
 final enemyCannon = new Cannon();
-
+Cannon leftCannon;
+Cannon rightCannon;
 
 void main() {
 
@@ -199,31 +200,31 @@ void connect(MouseEvent event) {
         if (message["playerType"] == "LEFT") {
           myCannon.pos = cannonLeftPos;
           enemyCannon.pos = cannonRightPos;
+          leftCannon = myCannon;
+          rightCannon = enemyCannon;
         } else {
-          myCannon.pos = cannonLeftPos;
-          enemyCannon.pos = cannonRightPos;
+          myCannon.pos = cannonRightPos;
+          enemyCannon.pos = cannonLeftPos;
+          leftCannon = enemyCannon;
+          rightCannon = myCannon;
         }
         
         context.clearRect(0, 0, SCALE_X, SCALE_Y);
         drawMapProfile(landscape);
 
       }
-      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST){
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT){
         double angle = message["angle"];
-        double power = message["power"];;
+        double power = message["power"];
         
-        Cannon enemyCannon = new Cannon();
-        enemyCannon.pos = new Point(0.73, 0.3);
-        enemyCannon.angle = angle;
-        enemyCannon.power = power;
-        
-        //TODO My adapt enemy shot
-        drawShotCurve(enemyCannon);
-        
+        if (message["shooter"] == "LEFT") {
+          drawShotCurve(leftCannon);
+        } else {
+          drawShotCurve(rightCannon);
+        }
       }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
         outputMsg("Not Supported by Client!");
-        
       }
     }
     outputMsg(e.data);
