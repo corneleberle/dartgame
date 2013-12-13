@@ -2,6 +2,9 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 
+WebSocket webSocket = null;
+
+
 void main() {
   InputElement input = querySelector("#connect");
   input.onClick.listen(connect);
@@ -10,7 +13,6 @@ void main() {
     ..onClick.listen(send);
 }
 
-WebSocket webSocket = null;
 
 outputMsg(String msg) {
   var output = querySelector('#output');
@@ -42,10 +44,6 @@ void connect(MouseEvent event) {
   });
 }
 
-void send(MouseEvent event) {
-  InputElement text = querySelector('#text');
-  webSocket.send(text.value);
-}
 
 abstract class AbstractMessage {
   
