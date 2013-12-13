@@ -47,15 +47,25 @@ public class LandscapeServiceImpl implements LandscapeService {
 	private List<Double> getLandscapePart(double from, double to, int numberOfPoints) {
 		List<Double> points = new ArrayList<Double>();
 		for (int x = 0; x < numberOfPoints; x++) {
-
-			double a = (to - from) / numberOfPoints;
-			double b = from;
-			points.add(linearFunction(a, x, b));
+			// points.add(linearFunction(from, to, numberOfPoints, x));
+			points.add(sinusFunction(from, to, numberOfPoints, x));
 		}
 		return points;
 	}
 
-	private double linearFunction(double a, int x, double b) {
-		return a * x + b;
+	// private double linearFunction(double from, double to, int numberOfPoints, int x) {
+	// double a = (to - from) / numberOfPoints;
+	// double b = from;
+	// return a * x + b;
+	// }
+
+	private double sinusFunction(double from, double to, int numberOfPoints, int x) {
+		// 0.4 / 2 * sin(x/200*PI - (PI / 2)) + 2 * 0.2
+		double a = 0.5 * (to - from);
+		double b = Math.PI / 200;
+		double c = -Math.PI / 2;
+		double d = 0.5 * Math.abs(to - from);
+		return a * Math.sin(b * x + c) + d;
 	}
+
 }
