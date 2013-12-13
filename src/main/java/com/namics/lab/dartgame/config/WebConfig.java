@@ -33,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(chatWebSocketHandler(), "/chat");
+		registry.addHandler(chatWebSocketHandler(), "/controller");
 	}
 
 	@Bean

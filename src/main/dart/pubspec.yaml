@@ -3,3 +3,4 @@ description: A sample web application
 dependencies:
   async: any
   browser: any
+  json: any
