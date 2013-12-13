@@ -12,6 +12,12 @@ public class InitMessage extends AbstractMessage {
 
 	private List<Double> landscape;
 
+	private int canonLeftX;
+
+	private int canonRightX;
+
+	private int wind; // -1000 to 1000
+
 	public double getDuration() {
 		return duration;
 	}
@@ -42,6 +48,30 @@ public class InitMessage extends AbstractMessage {
 
 	public void setLandscape(List<Double> landscape) {
 		this.landscape = landscape;
+	}
+
+	public int getCanonLeftX() {
+		return canonLeftX;
+	}
+
+	public void setCanonLeftX(int canonLeftX) {
+		this.canonLeftX = canonLeftX;
+	}
+
+	public int getCanonRightX() {
+		return canonRightX;
+	}
+
+	public void setCanonRightX(int canonRightX) {
+		this.canonRightX = canonRightX;
+	}
+
+	public int getWind() {
+		return wind;
+	}
+
+	public void setWind(int wind) {
+		this.wind = wind;
 	}
 
 }
