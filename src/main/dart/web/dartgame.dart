@@ -39,10 +39,11 @@ final int OFFSET_Y = CANVAS_HEIGHT;
 List<double> landscape = new List(1000);
 
 
+final myCannon = new Cannon();
+final enemyCannon = new Cannon();
 
 
 void main() {
-  final myCannon = new Cannon();
 
   //windSlider.onChange.listen((e) => drawWind());
   angleSlider.onChange.listen((e) => updateCannon(myCannon));
@@ -51,11 +52,6 @@ void main() {
   
   // connect
   input.onClick.listen(connect);
-  
-  // init
-  myCannon.pos = new Point(0.13, 0.3);
-  // fillLandscapeWithTestData(landscape);
-
 }
 
 
@@ -82,8 +78,8 @@ void updateCannon(Cannon cannon) {
 }
 
 void drawCannon(Cannon cannon) {
-  double deltaX = 0.2 * (0.1 + cannon.power) * cos(cannon.angle);
-  double deltaY = 0.2 * (0.1 + cannon.power) * sin(cannon.angle);
+  double deltaX = 0.1 * (1 + cannon.power) * cos(cannon.angle);
+  double deltaY = 0.1 * (1 + cannon.power) * sin(cannon.angle);
   context..beginPath()
          ..lineWidth = 2
          ..fillStyle = CANNON_COLOR
@@ -151,7 +147,7 @@ void drawMapProfile(List<double> mapProfile) {
 
 bool hitGround(num x, num y) {
   int position = (x * landscape.length).truncate();
-  return y <= landscape.elementAt(position);
+  return y < landscape.elementAt(position);
 }
 
 double scaleX(double x) {
@@ -191,6 +187,17 @@ void connect(MouseEvent event) {
         List<double> landscape2 = message["landscape"];
         landscape = landscape2;
         
+        Point cannonLeftPos = getCannonPos(landscape, message["canonLeftX"]);
+        Point cannonRightPos = getCannonPos(landscape, message["canonRightX"]);
+        
+        if (message["playerType"] == "LEFT") {
+          myCannon.pos = cannonLeftPos;
+          enemyCannon.pos = cannonRightPos;
+        } else {
+          myCannon.pos = cannonLeftPos;
+          enemyCannon.pos = cannonRightPos;
+        }
+        
         context.clearRect(0, 0, SCALE_X, SCALE_Y);
         drawMapProfile(landscape);
 
@@ -209,4 +216,8 @@ class Cannon {
   Cannon () { }
 }
 
-
+Point getCannonPos(List<double> landscape, int posX) {
+  double x = posX / landscape.length;
+  double y = landscape[posX];
+  return new Point(x, y);
+}
