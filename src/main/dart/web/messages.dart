@@ -85,3 +85,21 @@ class ShotRequestMessage extends AbstractMessage {
     return mapData; 
   }
 }
+
+class ShotResultMessage extends AbstractMessage {
+  
+  int shotId;
+  bool strike;
+  
+  ShotResultMessage(this.shotId, this.strike) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
+  
+  ShotResultMessage.custom(this.shotId, this.strike, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  
+  Map getBaseMap() {
+    Map mapData = super.getBaseMap();
+    mapData["shotId"] = shotId;
+    mapData["strike"] = strike;
+    return mapData; 
+  }
+}
+
