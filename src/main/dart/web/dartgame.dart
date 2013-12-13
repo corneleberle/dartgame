@@ -47,7 +47,7 @@ void main() {
   //windSlider.onChange.listen((e) => drawWind());
   angleSlider.onChange.listen((e) => updateCannon(myCannon));
   powerSlider.onChange.listen((e) => updateCannon(myCannon));
-  triggerButton.onClick.listen((e) => drawShotCurve(myCannon));
+  triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   
   // connect
   input.onClick.listen(connect);
@@ -115,6 +115,12 @@ void drawShotCurve(Cannon cannon) {
     time += 0.001;
   }
   debugText.text = "${time}%:  x=${x} / y=${y}";
+}
+
+void sendShotRequest(Cannon cannon) {
+  ShotRequestMessage message = new ShotRequestMessage(cannon.angle, cannon.power);
+  String payload = message.toJson();
+  webSocket.sendString(payload);
 }
 
 /// Draw a small circle representing the bomb.
