@@ -18,11 +18,8 @@ import com.namics.lab.dartgame.handler.impl.DelegateMessageHandlerImpl;
 import com.namics.lab.dartgame.handler.impl.ShotRequestMessageHandlerImpl;
 import com.namics.lab.dartgame.handler.impl.ShotResultMessageHandler;
 import com.namics.lab.dartgame.message.ConnectMessage;
-import com.namics.lab.dartgame.message.InitMessage;
-import com.namics.lab.dartgame.message.ShotMessage;
 import com.namics.lab.dartgame.message.ShotRequestMessage;
 import com.namics.lab.dartgame.message.ShotResultMessage;
-import com.namics.lab.dartgame.message.StatusMessage;
 import com.namics.lab.dartgame.socket.DartGameWebSocketHandler;
 
 @Configuration
@@ -45,11 +42,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	public DelegateMessageHandler delegateMessageHandler() {
 		DelegateMessageHandlerImpl delegateMessageHandler = new DelegateMessageHandlerImpl();
 		delegateMessageHandler.setConnectMessageHandler(connectMessageHandler());
-		delegateMessageHandler.setInitMessageHandler(initMessageHandler());
 		delegateMessageHandler.setShotRequestMessageHandler(shotRequestMessageHandler());
-		delegateMessageHandler.setShotMessageHandler(shotMessageHandler());
 		delegateMessageHandler.setShotResultMessageHandler(shotResultMessageHandler());
-		delegateMessageHandler.setStatusMessageHandler(statusMessageHandler());
 		return delegateMessageHandler;
 	}
 
@@ -59,31 +53,13 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	}
 
 	@Bean
-	public MessageHandler<InitMessage> initMessageHandler() {
-		// TODO implement
-		return null;
-	}
-
-	@Bean
 	public MessageHandler<ShotRequestMessage> shotRequestMessageHandler() {
 		return new ShotRequestMessageHandlerImpl();
 	}
 
 	@Bean
-	public MessageHandler<ShotMessage> shotMessageHandler() {
-		// TODO implement
-		return null;
-	}
-
-	@Bean
 	public MessageHandler<ShotResultMessage> shotResultMessageHandler() {
 		return new ShotResultMessageHandler();
-	}
-
-	@Bean
-	public MessageHandler<StatusMessage> statusMessageHandler() {
-		// TODO implement
-		return null;
 	}
 
 	// Allow serving HTML files through the default Servlet
