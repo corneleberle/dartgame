@@ -9,13 +9,17 @@ WebSocket webSocket = null;
 
 const String SHOT_COLOR = "orange";
 const String GROUND_COLOR = "grey";
+const String CANNON_COLOR = "red";
 const int SEED_RADIUS = 1;
 const num TAU = PI * 2;
 const num GRAVITY = 1;
 
 final InputElement windSlider = querySelector("#wind");
+final Element windText = querySelector("#windText");
 final InputElement angleSlider = querySelector("#angle");
+final Element angleText = querySelector("#angleText");
 final InputElement powerSlider = querySelector("#power");
+final Element powerText = querySelector("#powerText");
 final InputElement triggerButton = querySelector("#trigger");
 final InputElement input = querySelector("#connect");
 
@@ -49,14 +53,14 @@ void main() {
   
   // init
   myCannon.pos = new Point(0.13, 0.3);
-  //fillLandscape(landscape);
+  // fillLandscapeWithTestData(landscape);
 
 }
 
 
 
 
-void fillLandscape(List<double> mapProfile) {
+void fillLandscapeWithTestData(List<double> mapProfile) {
   double y = 0.0;
   final int max = mapProfile.length;
   for (int i=0; i < max; i++) {
@@ -68,7 +72,25 @@ void fillLandscape(List<double> mapProfile) {
 
 void updateCannon(Cannon cannon) {
   cannon.angle = int.parse(angleSlider.value) / 1000 * PI; 
-  cannon.power = int.parse(powerSlider.value) / 1000; 
+  cannon.power = int.parse(powerSlider.value) / 1000;
+  
+  angleText.text = "${cannon.angle}";
+  powerText.text = "${cannon.power}";
+  
+  drawCannon(cannon);
+}
+
+void drawCannon(Cannon cannon) {
+  double deltaX = 0.2 * (0.1 + cannon.power) * cos(cannon.angle);
+  double deltaY = 0.2 * (0.1 + cannon.power) * sin(cannon.angle);
+  context..beginPath()
+         ..lineWidth = 2
+         ..fillStyle = CANNON_COLOR
+         ..strokeStyle = CANNON_COLOR
+         ..moveTo(scaleX(cannon.pos.x), scaleY(cannon.pos.y))
+         ..lineTo(scaleX(cannon.pos.x + deltaX), scaleY(cannon.pos.y + deltaY))
+         ..closePath()
+         ..stroke();
 }
 
 void drawShotCurve(Cannon cannon) {
@@ -78,15 +100,11 @@ void drawShotCurve(Cannon cannon) {
   bool flying=true;
   
   num wind = int.parse(windSlider.value) / 1000; 
-  num angle = int.parse(angleSlider.value) / 1000 * PI; 
-  num power = int.parse(powerSlider.value) / 1000; 
-      
-
   
   while (flying) {
     // Normalized position
-    x = cannon.pos.x + (2*power*time * cos(angle) + wind*time);
-    y = cannon.pos.y + (2*power*time * sin(angle) - GRAVITY/2*time*time);
+    x = cannon.pos.x + (2 * cannon.power * time * cos(cannon.angle) + wind*time);
+    y = cannon.pos.y + (2 * cannon.power * time * sin(cannon.angle) - GRAVITY/2*time*time);
     
     drawLine(scaleX(x), scaleY(y), SHOT_COLOR);
 
@@ -210,9 +228,9 @@ class ConnectMessage extends AbstractMessage {
 
 
 class Cannon {
-  Point pos;
-  double angle;
-  double power;
+  Point pos = new Point(0,0);
+  double angle = 0.0;
+  double power = 0.0;
   
   Cannon () { }
 }
