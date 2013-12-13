@@ -49,8 +49,7 @@ void main() {
   
   // init
   myCannon.pos = new Point(0.13, 0.3);
-  //fillLandscape(landscape);
-
+  
 }
 
 
@@ -163,7 +162,7 @@ void connect(MouseEvent event) {
     ConnectMessage connectMessage = new ConnectMessage()
       ..sent = new DateTime.now()
       ..sender = "Spieler 1"
-      ..messageType = AbstractMessage.MESSAGE_TYPE_CONNECT
+      ..messageType = MessageTypesEnum.MESSAGE_TYPE_CONNECT
       ..name = "Spieler 1";
     
     String payload = connectMessage.toJson();
@@ -171,20 +170,28 @@ void connect(MouseEvent event) {
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
-    Map data = JSON.decode(e.data);
-    List<double> landscape2 = data["landscape"];
-    landscape = landscape2;
-    
-    context.clearRect(0, 0, SCALE_X, SCALE_Y);
-    drawMapProfile(landscape);
+    Map message = JSON.decode(e.data);
+    if(message != null && message.isNotEmpty){
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_INIT){
+        List<double> landscape2 = message["landscape"];
+        landscape = landscape2;
+        
+        context.clearRect(0, 0, SCALE_X, SCALE_Y);
+        drawMapProfile(landscape);
 
+      }
+    }
+    outputMsg(e.data);
   });
 }
 
+class MessageTypesEnum{
+  static const MESSAGE_TYPE_CONNECT = "CONNECT";
+  static const MESSAGE_TYPE_INIT = "INIT";
+
+}
 
 abstract class AbstractMessage {
-  static const MESSAGE_TYPE_CONNECT = "CONNECT";
-  
   DateTime sent;
   
   String sender;
