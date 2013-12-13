@@ -9,6 +9,7 @@ import com.namics.lab.dartgame.message.ConnectMessage;
 import com.namics.lab.dartgame.message.InitMessage;
 import com.namics.lab.dartgame.message.PlayerType;
 import com.namics.lab.dartgame.repository.GameRepository;
+import com.namics.lab.dartgame.service.LandscapeService;
 import com.namics.lab.dartgame.service.MessageService;
 
 public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
@@ -16,6 +17,8 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 	private GameRepository gameRepository;
 
 	private MessageService messageService;
+
+	private LandscapeService landscapeService;
 
 	private Game pendingGame;
 
@@ -36,6 +39,8 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 		InitMessage initMessage = new InitMessage();
 		initMessage.setDuration(Game.DURATION);
 		initMessage.setNumberOfBombs(Game.NUMBER_OF_BOMBS);
+
+		initMessage.setLandscape(landscapeService.getLandscape());
 
 		initMessage.setPlayerType(PlayerType.LEFT);
 		messageService.send(initMessage, game.getLeftPlayer());
@@ -62,11 +67,13 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 		this.messageService = messageService;
 	}
 
-	public Game getPendingGame() {
-		return pendingGame;
+	public LandscapeService getLandscapeService() {
+		return landscapeService;
 	}
 
-	public void setPendingGame(Game pendingGame) {
-		this.pendingGame = pendingGame;
+	@Autowired
+	public void setLandscapeService(LandscapeService landscapeService) {
+		this.landscapeService = landscapeService;
 	}
+
 }

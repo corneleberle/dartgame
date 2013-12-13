@@ -1,5 +1,7 @@
 package com.namics.lab.dartgame.message;
 
+import java.util.List;
+
 public class InitMessage extends AbstractMessage {
 
 	private double duration;
@@ -8,7 +10,7 @@ public class InitMessage extends AbstractMessage {
 
 	private PlayerType playerType;
 
-	private double[] landscape;
+	private List<Double> landscape;
 
 	public double getDuration() {
 		return duration;
@@ -34,11 +36,11 @@ public class InitMessage extends AbstractMessage {
 		this.playerType = playerType;
 	}
 
-	public double[] getLandscape() {
+	public List<Double> getLandscape() {
 		return landscape;
 	}
 
-	public void setLandscape(double[] landscape) {
+	public void setLandscape(List<Double> landscape) {
 		this.landscape = landscape;
 	}
 
