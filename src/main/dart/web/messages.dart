@@ -5,7 +5,7 @@ class MessageTypesEnum{
   static const MESSAGE_TYPE_CONNECT = "CONNECT";
   static const MESSAGE_TYPE_INIT = "INIT";
   static const MESSAGE_TYPE_SHOT_REQUEST = "SHOT_REQUEST";
-
+  static const MESSAGE_TYPE_SHOT = "SHOT";
 }
 
 class PlayerTypeEnum{
@@ -75,7 +75,7 @@ class ShotRequestMessage extends AbstractMessage {
   double angle;
   double power;
   
-  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_INIT);
+  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT);
   
   ShotRequestMessage.custom(this.angle, this.power, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
   
