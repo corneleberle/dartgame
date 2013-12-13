@@ -16,13 +16,10 @@ const num TAU = PI * 2;
 const num GRAVITY = 1;
 
 final InputElement windSlider = querySelector("#wind");
-final Element windText = querySelector("#windText");
 final InputElement angleSlider = querySelector("#angle");
-final Element angleText = querySelector("#angleText");
 final InputElement powerSlider = querySelector("#power");
-final Element powerText = querySelector("#powerText");
 final InputElement triggerButton = querySelector("#trigger");
-final InputElement input = querySelector("#connect");
+final InputElement connectButton = querySelector("#connect");
 
 final Element debugText = querySelector("#debug");
 
@@ -41,7 +38,7 @@ List<double> landscape = new List(1000);
 
 final myCannon = new Cannon();
 final enemyCannon = new Cannon();
-
+int wind = 0;
 
 void main() {
 
@@ -51,7 +48,7 @@ void main() {
   triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   
   // connect
-  input.onClick.listen(connect);
+  connectButton.onClick.listen(connect);
 }
 
 
@@ -70,10 +67,6 @@ void fillLandscapeWithTestData(List<double> mapProfile) {
 void updateCannon(Cannon cannon) {
   cannon.angle = int.parse(angleSlider.value) / 1000 * PI; 
   cannon.power = int.parse(powerSlider.value) / 1000;
-  
-  angleText.text = "${cannon.angle}";
-  powerText.text = "${cannon.power}";
-  
   drawCannon(cannon);
 }
 
@@ -100,8 +93,8 @@ void drawShotCurve(Cannon cannon) {
   
   while (flying) {
     // Normalized position
-    x = cannon.pos.x + (2 * cannon.power * time * cos(cannon.angle) + wind*time);
-    y = cannon.pos.y + (2 * cannon.power * time * sin(cannon.angle) - GRAVITY/2*time*time);
+    x = cannon.pos.x + (2 * cannon.power * time * cos(cannon.angle) + wind * time);
+    y = cannon.pos.y + (2 * cannon.power * time * sin(cannon.angle) - GRAVITY/2 * time * time);
     
     drawLine(scaleX(x), scaleY(y), SHOT_COLOR);
 
@@ -193,6 +186,7 @@ void connect(MouseEvent event) {
         List<double> landscape2 = message["landscape"];
         landscape = landscape2;
         
+        wind = message["wind"];
         Point cannonLeftPos = getCannonPos(landscape, message["canonLeftX"]);
         Point cannonRightPos = getCannonPos(landscape, message["canonRightX"]);
         
