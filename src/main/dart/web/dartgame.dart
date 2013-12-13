@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'messages.dart';
 
 WebSocket webSocket = null;
 
@@ -159,12 +160,7 @@ void connect(MouseEvent event) {
   
   
   webSocket.onOpen.listen((e) {
-    ConnectMessage connectMessage = new ConnectMessage()
-      ..sent = new DateTime.now()
-      ..sender = "Spieler 1"
-      ..messageType = MessageTypesEnum.MESSAGE_TYPE_CONNECT
-      ..name = "Spieler 1";
-    
+    ConnectMessage connectMessage = new ConnectMessage("Spieler 1");
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
   });
@@ -184,36 +180,6 @@ void connect(MouseEvent event) {
     outputMsg(e.data);
   });
 }
-
-class MessageTypesEnum{
-  static const MESSAGE_TYPE_CONNECT = "CONNECT";
-  static const MESSAGE_TYPE_INIT = "INIT";
-
-}
-
-abstract class AbstractMessage {
-  DateTime sent;
-  
-  String sender;
-  
-  String messageType;
-}
-
-class ConnectMessage extends AbstractMessage {
-  String name;
-  
-  String toJson() {
-    var mapData = new Map();
-    mapData["sent"] = sent.toString();
-    mapData["sender"] = sender;
-    mapData["messageType"] = messageType;
-    mapData["name"] = name;
-
-    return JSON.encode(mapData);
-  }
-}
-
-
 
 
 class Cannon {
