@@ -201,7 +201,7 @@ void connect(MouseEvent event) {
         drawMapProfile(landscape);
 
       }
-      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT){
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST){
         double angle = message["angle"];
         double power = message["power"];;
         
