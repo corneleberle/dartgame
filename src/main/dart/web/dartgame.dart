@@ -115,6 +115,14 @@ void drawShotCurve(Cannon cannon) {
     time += 0.001;
   }
   debugText.text = "${time}%:  x=${x} / y=${y}";
+  
+  sendShotRequest(cannon.angle, cannon.power);
+}
+
+void sendShotRequest(num angle, num power) {
+  ShotRequestMessage message = new ShotRequestMessage(angle, power);
+  String payload = message.toJson();
+  webSocket.sendString(payload);
 }
 
 /// Draw a small circle representing the bomb.

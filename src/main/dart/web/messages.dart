@@ -4,6 +4,7 @@ import 'dart:convert';
 class MessageTypesEnum{
   static const MESSAGE_TYPE_CONNECT = "CONNECT";
   static const MESSAGE_TYPE_INIT = "INIT";
+  static const MESSAGE_TYPE_SHOT_REQUEST = "SHOT_REQUEST";
 
 }
 
