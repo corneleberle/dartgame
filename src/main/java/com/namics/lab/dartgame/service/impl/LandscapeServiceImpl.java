@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.stereotype.Service;
+
 import com.namics.lab.dartgame.service.LandscapeService;
 
+@Service
 public class LandscapeServiceImpl implements LandscapeService {
 
 	private static final int PARTS = 5;
