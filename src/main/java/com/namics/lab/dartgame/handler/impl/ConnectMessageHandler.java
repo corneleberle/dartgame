@@ -1,5 +1,7 @@
 package com.namics.lab.dartgame.handler.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,18 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 			this.pendingGame.setLeftPlayer(session);
 		} else {
 			this.pendingGame.setRightPlayer(session);
+			initGame(pendingGame);
 			this.gameRepository.saveGame(this.pendingGame);
 			sendInitMessage(this.pendingGame);
 			this.pendingGame = null;
 		}
+	}
+
+	private void initGame(Game game) {
+		Map<PlayerType, Integer> remainingShots = new HashMap<PlayerType, Integer>();
+		remainingShots.put(PlayerType.LEFT, Game.NUMBER_OF_BOMBS);
+		remainingShots.put(PlayerType.RIGHT, Game.NUMBER_OF_BOMBS);
+		game.setRemainingShots(remainingShots);
 	}
 
 	private void sendInitMessage(Game game) {

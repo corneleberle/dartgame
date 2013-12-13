@@ -48,7 +48,7 @@ void main() {
   //windSlider.onChange.listen((e) => drawWind());
   angleSlider.onChange.listen((e) => updateCannon(myCannon));
   powerSlider.onChange.listen((e) => updateCannon(myCannon));
-  triggerButton.onClick.listen((e) => drawShotCurve(myCannon));
+  triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   
   // connect
   input.onClick.listen(connect);
@@ -111,6 +111,12 @@ void drawShotCurve(Cannon cannon) {
     time += 0.001;
   }
   debugText.text = "${time}%:  x=${x} / y=${y}";
+}
+
+void sendShotRequest(Cannon cannon) {
+  ShotRequestMessage message = new ShotRequestMessage(cannon.angle, cannon.power);
+  String payload = message.toJson();
+  webSocket.sendString(payload);
 }
 
 /// Draw a small circle representing the bomb.
@@ -201,6 +207,23 @@ void connect(MouseEvent event) {
         context.clearRect(0, 0, SCALE_X, SCALE_Y);
         drawMapProfile(landscape);
 
+      }
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST){
+        double angle = message["angle"];
+        double power = message["power"];;
+        
+        Cannon enemyCannon = new Cannon();
+        enemyCannon.pos = new Point(0.73, 0.3);
+        enemyCannon.angle = angle;
+        enemyCannon.power = power;
+        
+        //TODO My adapt enemy shot
+        drawShotCurve(enemyCannon);
+        
+      }
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
+        outputMsg("Not Supported by Client!");
+        
       }
     }
     outputMsg(e.data);

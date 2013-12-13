@@ -4,7 +4,7 @@ import 'dart:convert';
 class MessageTypesEnum{
   static const MESSAGE_TYPE_CONNECT = "CONNECT";
   static const MESSAGE_TYPE_INIT = "INIT";
-
+  static const MESSAGE_TYPE_SHOT_REQUEST = "SHOT_REQUEST";
 }
 
 class PlayerTypeEnum{
@@ -74,7 +74,7 @@ class ShotRequestMessage extends AbstractMessage {
   double angle;
   double power;
   
-  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_INIT);
+  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
   
   ShotRequestMessage.custom(this.angle, this.power, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
   
@@ -85,3 +85,21 @@ class ShotRequestMessage extends AbstractMessage {
     return mapData; 
   }
 }
+
+class ShotResultMessage extends AbstractMessage {
+  
+  int shotId;
+  bool strike;
+  
+  ShotResultMessage(this.shotId, this.strike) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
+  
+  ShotResultMessage.custom(this.shotId, this.strike, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  
+  Map getBaseMap() {
+    Map mapData = super.getBaseMap();
+    mapData["shotId"] = shotId;
+    mapData["strike"] = strike;
+    return mapData; 
+  }
+}
+
