@@ -4,6 +4,11 @@ import java.util.List;
 
 public class InitMessage extends AbstractMessage {
 
+	public InitMessage() {
+		super();
+		setMessageType(MessageType.INIT);
+	}
+
 	private double duration;
 
 	private int numberOfBombs;
