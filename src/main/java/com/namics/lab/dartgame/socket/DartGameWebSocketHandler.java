@@ -1,12 +1,8 @@
-package com.namics.lab.dartgame.chat;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.namics.lab.dartgame.socket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -21,29 +17,15 @@ import com.namics.lab.dartgame.repository.GameRepository;
 import com.namics.lab.dartgame.service.GameService;
 import com.namics.lab.dartgame.service.MessageService;
 
-/**
- * Echo messages by implementing a Spring {@link WebSocketHandler} abstraction.
- */
-public class ChatWebSocketHandler extends TextWebSocketHandler {
+public class DartGameWebSocketHandler extends TextWebSocketHandler {
 
 	private DelegateMessageHandler delegateMessageHandler;
-
-	Set<WebSocketSession> sessions = new HashSet<WebSocketSession>();
 
 	private GameRepository gameRepository;
 
 	private GameService gameService;
 
 	private MessageService messageService;
-
-	@Autowired
-	public ChatWebSocketHandler() {
-	}
-
-	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		sessions.add(session);
-	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {

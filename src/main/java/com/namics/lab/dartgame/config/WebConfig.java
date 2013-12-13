@@ -11,7 +11,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import com.namics.lab.dartgame.chat.ChatWebSocketHandler;
 import com.namics.lab.dartgame.handler.DelegateMessageHandler;
 import com.namics.lab.dartgame.handler.MessageHandler;
 import com.namics.lab.dartgame.handler.impl.ConnectMessageHandler;
@@ -24,6 +23,7 @@ import com.namics.lab.dartgame.message.ShotMessage;
 import com.namics.lab.dartgame.message.ShotRequestMessage;
 import com.namics.lab.dartgame.message.ShotResultMessage;
 import com.namics.lab.dartgame.message.StatusMessage;
+import com.namics.lab.dartgame.socket.DartGameWebSocketHandler;
 
 @Configuration
 @ComponentScan(basePackages = "com.namics.lab.dartgame")
@@ -38,7 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 
 	@Bean
 	public WebSocketHandler chatWebSocketHandler() {
-		return new ChatWebSocketHandler();
+		return new DartGameWebSocketHandler();
 	}
 
 	@Bean
