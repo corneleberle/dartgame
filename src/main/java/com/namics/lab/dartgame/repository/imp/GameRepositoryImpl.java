@@ -32,7 +32,9 @@ public class GameRepositoryImpl implements GameRepository {
 
 	@Override
 	public void removeGame(Game game) {
-		games.remove(game);
+		if (games != null && games.contains(game)) {
+			games.remove(game);
+		}
 	}
 
 }

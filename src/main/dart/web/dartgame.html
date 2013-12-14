@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 
-<!-- Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
-     for details. All rights reserved. Use of this source code is governed by a
-     BSD-style license that can be found in the LICENSE file. -->
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,35 +9,35 @@
   <body>
     <h1>Dart Game</h1>
 
-    <p>A canvas 2D demo.</p>
+    <p>Lab. DartGame. Namics.</p>
 
     <div id="container">
       <canvas id="canvas" width="795" height="400" class="center"></canvas>
     </div>
     
     <div> 
-    <footer>
-        <p id="debug">&nbsp;</p>
-      </footer>
       <form class="center">
-        Wind: <input id="wind" type="range" min="-1000" max="1000" value="0"/><br/>
-        Angle: <input id="angle" type="range" max="1000" value="350"/><br/>
+        Angle: <input id="angle" type="range" max="1000" value="500"/><br/>
         Power: <input id="power" type="range" max="1000" value="500"/><br/>
-        <input id="trigger" type="button" value="Shot"/><br/>
+        <input id="trigger" type="button" value="shoot"/><br/>
       </form>
       <br/>
-      <input type="button" id="connect" value="connect" />
+      <input id="connect" type="button" value="connect" />
     </div>
     
     <div>
-      <textarea rows="20" cols="100" id="output"></textarea>
+      <textarea id="output" rows="20" cols="100"></textarea>
     </div>
-
 
     <script type="application/dart" src="dartgame.dart"></script>
 
     <!-- the dart.js script swaps out the application/dart script for a text/javascript script that points to the JavaScript version of the Dart app. -->
     <script src="packages/browser/dart.js"></script>
     
+    <div hidden="hidden">
+      <canvas id="tempCanvas"></canvas>
+      <img id="windsock" src="img/windsock_small.png"/>
+    </div>
+
   </body>
 </html>

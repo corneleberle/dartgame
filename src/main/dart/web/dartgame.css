@@ -27,12 +27,6 @@ p {
   float: left;
 }
 
-#notes {
-  float: right;
-  width: 120px;
-  text-align: right;
-}
-
 .error {
   font-style: italic;
   color: red;
