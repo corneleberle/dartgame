@@ -83,15 +83,27 @@ void drawCannon(Cannon cannon) {
     tempCanvas = cannonRightCanvas;
   }
   tempCanvas.context2D
-      ..clearRect(0, 0, tempCanvas.width, tempCanvas.height)
+      ..clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+  tempCanvas.context2D
       ..beginPath()
-      ..lineWidth = 2
-      ..fillStyle = CANNON_COLOR
+      ..lineWidth = 5
       ..strokeStyle = CANNON_COLOR
-      ..moveTo(scaleX(cannon.pos.x), scaleY(cannon.pos.y))
-      ..lineTo(scaleX(cannon.pos.x + deltaX), scaleY(cannon.pos.y + deltaY))
+      ..arc(scaleX(cannon.pos.x), scaleY(cannon.pos.y), 5, 0, PI, true)
       ..closePath()
       ..stroke();
+  tempCanvas.context2D
+      ..save()
+      ..lineWidth = 5
+      ..fillStyle = CANNON_COLOR
+      ..strokeStyle = CANNON_COLOR
+      ..translate(scaleX(cannon.pos.x), scaleY(cannon.pos.y))
+      ..rotate(-cannon.angle)
+      ..beginPath()
+      ..moveTo(0, 0)
+      ..lineTo(scaleX(1 + cannon.power)/20, 0)
+      ..closePath()
+      ..stroke()
+      ..restore();
 
   redrawCanvas();
 }
