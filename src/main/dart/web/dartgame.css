@@ -42,3 +42,9 @@ img {
   margin: 0px auto;
   text-align: center;
 }
+
+.inline {
+  display: inline;
+  margin: 0px auto;
+  text-align: center;
+}

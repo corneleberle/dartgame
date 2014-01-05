@@ -6,15 +6,24 @@ import 'messages.dart';
 
 
 const String SHOT_COLOR = "orange";
-const String GROUND_COLOR = "grey";
+const String SURFACE_COLOR = "black";
+const String GROUND_COLOR = "lightgrey";
 const String CANNON_COLOR = "red";
 const String HIT_COLOR = "yellow";
 
+const num GRAVITY_FACTOR = 0.2;
+const num POWER_FACTOR = 1;
 const num WIND_FACTOR = 0.1;
-const num GRAVITY_FACTOR = 0.5;
+const num HIT_TOLERANCE = 0.03;
 
-final InputElement angleSlider = querySelector("#angle");
-final InputElement powerSlider = querySelector("#power");
+final Element angleValue = querySelector("#angleValue");
+final Element powerValue = querySelector("#powerValue");
+final InputElement angleSlider = querySelector("#angleSlider");
+final InputElement angleMinus = querySelector("#angleMinus");
+final InputElement anglePlus = querySelector("#anglePlus");
+final InputElement powerSlider = querySelector("#powerSlider");
+final InputElement powerMinus = querySelector("#powerMinus");
+final InputElement powerPlus = querySelector("#powerPlus");
 final InputElement triggerButton = querySelector("#trigger");
 final InputElement connectButton = querySelector("#connect");
 final ImageElement windsockImage = querySelector("#windsock");
@@ -49,33 +58,37 @@ num wind = 0.0;
 
 void main() {
   angleSlider.onChange.listen((e) => updateCannon(myCannon));
+  angleMinus.onClick.listen((e) => updateSlider(angleSlider, -1));
+  anglePlus.onClick.listen((e) => updateSlider(angleSlider, 1));
   powerSlider.onChange.listen((e) => updateCannon(myCannon));
+  powerMinus.onClick.listen((e) => updateSlider(powerSlider, -1));
+  powerPlus.onClick.listen((e) => updateSlider(powerSlider, 1));
   triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   connectButton.onClick.listen(connect);  
 }
 
-
-void fillLandscapeWithTestData(List<num> landscape) {
-  num y = 0.0;
-  final int max = landscape.length;
-  for (int i=0; i < max; i++) {
-    num x = i / max;
-    landscape[i] = 0.1 + 0.4*sin(x*PI) + 0.2*x;
-  }
+void updateSlider(InputElement slider, num delta) {
+  slider.valueAsNumber += delta;
+  slider.maxLength = 1000;
+  updateCannon(myCannon);
 }
 
-
 void updateCannon(Cannon cannon) {
-  cannon.angle = PI - int.parse(angleSlider.value) / 1000 * PI; 
-  cannon.power = int.parse(powerSlider.value) / 1000;
+  cannon.angle = PI / 2 - (angleSlider.valueAsNumber / 180 * PI); 
+  cannon.power = powerSlider.valueAsNumber / 1000;
+  
+  num angleDegree = cannon.angle / PI * 180;
+  if (cannon == rightCannon) {
+    angleDegree = 180 - angleDegree;
+  }
+  angleValue.text = angleDegree.toStringAsFixed(0) + "°";
+  powerValue.text = powerSlider.value;
+
   drawCannon(cannon);
 }
 
 
 void drawCannon(Cannon cannon) {
-  double deltaX = 0.1 * (1 + cannon.power) * cos(cannon.angle);
-  double deltaY = 0.1 * (1 + cannon.power) * sin(cannon.angle);
-
   CanvasElement tempCanvas;
   if (cannon == leftCannon) {
     tempCanvas = cannonLeftCanvas;
@@ -119,11 +132,11 @@ void drawShotCurve(Cannon cannon) {
   
   num i = 0;
   do {
-    time = i * 0.01;
+    time = i * 0.001;
     
     // Normalized position
-    x = cannon.pos.x + (2 * cannon.power * time * cos(cannon.angle) + WIND_FACTOR * wind * time);
-    y = cannon.pos.y + (2 * cannon.power * time * sin(cannon.angle) - GRAVITY_FACTOR * time * time);
+    x = cannon.pos.x + (POWER_FACTOR * cannon.power * time * cos(cannon.angle) + WIND_FACTOR * wind * time);
+    y = cannon.pos.y + (POWER_FACTOR * cannon.power * time * sin(cannon.angle) - GRAVITY_FACTOR * time * time) * SCALE_X / SCALE_Y;
     
     if (x<=0 || x>=1 || y<0) {
       flying = false;
@@ -131,9 +144,18 @@ void drawShotCurve(Cannon cannon) {
       flying = false;
       drawCircle(flightpathCanvas, scaleX(x), scaleY(y), HIT_COLOR, 4);
       redrawCanvas();
+
+      if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
+        triggerButton.value = "lost";
+        triggerButton.disabled = true;
+      } else if ((x - enemyCannon.pos.x).abs() < HIT_TOLERANCE) {
+        triggerButton.value = "won";
+        triggerButton.disabled = true;
+      } 
+        
     }
     
-    if (i % 5 == 0) {
+    if (i % 25 == 0) {
       drawCircle(flightpathCanvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
       redrawCanvas();
     }
@@ -166,10 +188,10 @@ void drawLandscape(List<num> mapProfile) {
       ..beginPath()
       ..lineWidth = 2
       ..fillStyle = GROUND_COLOR
-      ..strokeStyle = GROUND_COLOR
+      ..strokeStyle = SURFACE_COLOR
       ..moveTo(0, scaleY(mapProfile.elementAt(0)));
   
-  for(int i = 0; i < mapProfile.length; i++){
+  for(int i = 1; i < mapProfile.length; i++){
     landscapeCanvas.context2D.lineTo(scaleX(1/mapProfile.length * i), scaleY(mapProfile.elementAt(i)));
   }
   
@@ -230,9 +252,7 @@ void outputMsg(String msg) {
 }
 
 void connect(MouseEvent event) {
-  //webSocket = new WebSocket('ws://localhost:8080/dartgame/echo');
-  webSocket = new WebSocket('ws://localhost:8080/dartgame/controller');
-  
+  webSocket = new WebSocket('ws://localhost:8080/dartgame/controller');  
   
   webSocket.onOpen.listen((e) {
     ConnectMessage connectMessage = new ConnectMessage("Spieler 1");
@@ -306,4 +326,16 @@ Point getCannonPos(List<double> landscape, int posX) {
   double x = posX / landscape.length;
   double y = landscape[posX];
   return new Point(x, y);
+}
+
+
+// === Rubbish ================================================================
+
+void fillLandscapeWithTestData(List<num> landscape) {
+  num y = 0.0;
+  final int max = landscape.length;
+  for (int i=0; i < max; i++) {
+    num x = i / max;
+    landscape[i] = 0.1 + 0.4*sin(x*PI) + 0.2*x;
+  }
 }
