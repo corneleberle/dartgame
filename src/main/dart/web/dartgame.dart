@@ -42,7 +42,8 @@ final int OFFSET_Y = CANVAS_HEIGHT;
 // For performance reasons the landscape shall only be drawn once, whereas cannon, fligth path, etc. are redrawn very often
 final CanvasElement cannonLeftCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 final CanvasElement cannonRightCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
-final CanvasElement flightpathCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
+final CanvasElement leftFlightpathCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
+final CanvasElement rightFlightpathCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 final CanvasElement landscapeCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 final CanvasElement windsockCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 
@@ -121,14 +122,14 @@ void drawCannon(Cannon cannon) {
   redrawCanvas();
 }
 
-void drawShotCurve(Cannon cannon) {
+void drawShotCurve(Cannon cannon, CanvasElement canvas) {
   num time = 0;
   num x = 0;
   num y = 0;
   bool flying = true;
   
-  flightpathCanvas.context2D
-      ..clearRect(0, 0, flightpathCanvas.width, flightpathCanvas.height);
+  canvas.context2D
+      ..clearRect(0, 0, canvas.width, canvas.height);
   
   num i = 0;
   do {
@@ -142,7 +143,7 @@ void drawShotCurve(Cannon cannon) {
       flying = false;
     } else if (hitGround(x,y)) {
       flying = false;
-      drawCircle(flightpathCanvas, scaleX(x), scaleY(y), HIT_COLOR, 4);
+      drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, 4);
       redrawCanvas();
 
       if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
@@ -156,7 +157,7 @@ void drawShotCurve(Cannon cannon) {
     }
     
     if (i % 25 == 0) {
-      drawCircle(flightpathCanvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
+      drawCircle(canvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
       redrawCanvas();
     }
     
@@ -223,7 +224,8 @@ void redrawCanvas() {
       ..drawImage(cannonLeftCanvas, 0, 0)
         ..drawImage(cannonRightCanvas, 0, 0)
       ..drawImage(windsockCanvas, 0, 0)
-      ..drawImage(flightpathCanvas, 0, 0);
+      ..drawImage(leftFlightpathCanvas, 0, 0)
+      ..drawImage(rightFlightpathCanvas, 0, 0);
 }
 
 bool hitGround(num x, num y) {
@@ -297,12 +299,12 @@ void connect(MouseEvent event) {
           leftCannon.angle = angle;
           leftCannon.power = power;
           drawCannon(leftCannon);
-          drawShotCurve(leftCannon);
+          drawShotCurve(leftCannon, leftFlightpathCanvas);
         } else {
           rightCannon.angle = angle;
           rightCannon.power = power;
           drawCannon(rightCannon);
-          drawShotCurve(rightCannon);
+          drawShotCurve(rightCannon, rightFlightpathCanvas);
         }
       }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
