@@ -23,6 +23,15 @@ p {
   background-color: #fff;
 }
 
+#log {
+  width: 100%;
+  padding-top: 30px;
+}
+
+#log textarea {
+  width: 100%;
+}
+
 #summary {
   float: left;
 }

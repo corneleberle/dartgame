@@ -25,6 +25,7 @@ final InputElement powerSlider = querySelector("#powerSlider");
 final InputElement powerMinus = querySelector("#powerMinus");
 final InputElement powerPlus = querySelector("#powerPlus");
 final InputElement triggerButton = querySelector("#trigger");
+final InputElement nameText = querySelector("#name");
 final InputElement connectButton = querySelector("#connect");
 final ImageElement windsockImage = querySelector("#windsock");
 
@@ -254,12 +255,21 @@ void outputMsg(String msg) {
 }
 
 void connect(MouseEvent event) {
+  if (nameText.value.isEmpty) {
+    window.alert("Please enter a name.");
+    return;
+  }
+  
   webSocket = new WebSocket('ws://localhost:8080/dartgame/controller');  
   
   webSocket.onOpen.listen((e) {
-    ConnectMessage connectMessage = new ConnectMessage("Spieler 1");
+    ConnectMessage connectMessage = new ConnectMessage(nameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
+    
+    // Disable connect button and name text input element
+    connectButton.disabled = true;
+    nameText.disabled = true;
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
