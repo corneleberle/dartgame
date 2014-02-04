@@ -47,6 +47,7 @@ final CanvasElement leftFlightpathCanvas = new CanvasElement(width: CANVAS_WIDTH
 final CanvasElement rightFlightpathCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 final CanvasElement landscapeCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 final CanvasElement windsockCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
+final CanvasElement endCanvas = new CanvasElement(width: CANVAS_WIDTH, height: CANVAS_HEIGHT);
 
 WebSocket webSocket = null;
 List<num> landscape = new List(1000);
@@ -128,7 +129,7 @@ void drawShotCurve(Cannon cannon, CanvasElement canvas) {
   num x = 0;
   num y = 0;
   bool flying = true;
-  
+    
   canvas.context2D
       ..clearRect(0, 0, canvas.width, canvas.height);
   
@@ -145,25 +146,56 @@ void drawShotCurve(Cannon cannon, CanvasElement canvas) {
     } else if (hitGround(x,y)) {
       flying = false;
       drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, 4);
-      redrawCanvas();
 
       if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
-        triggerButton.value = "lost";
+        disableControls();
+        drawEnd("Loser");
         triggerButton.disabled = true;
       } else if ((x - enemyCannon.pos.x).abs() < HIT_TOLERANCE) {
-        triggerButton.value = "won";
-        triggerButton.disabled = true;
+        disableControls();
+        drawEnd("Winner");
       } 
         
     }
     
     if (i % 25 == 0) {
       drawCircle(canvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
-      redrawCanvas();
     }
     
     i += 1;
   } while (flying);
+  
+  redrawCanvas();
+}
+
+void disableControls() {
+  angleMinus.disabled = true;
+  angleSlider.disabled = true;
+  anglePlus.disabled = true;
+  
+  powerMinus.disabled = true;
+  powerSlider.disabled = true;
+  powerPlus.disabled = true;
+  
+  triggerButton.disabled = true;
+}
+
+void drawEnd(String text) {
+  int rectWith = 300;
+  int rectHeight = 100;
+  
+  endCanvas.context2D
+    ..beginPath()
+    ..rect(CANVAS_WIDTH / 2 - rectWith / 2, CANVAS_HEIGHT / 2 - rectHeight / 2, rectWith, rectHeight)
+    ..fillStyle = "lightgrey"
+    ..fill()
+    ..lineWidth = 5
+    ..strokeStyle = "black"
+    ..stroke()
+    ..fillStyle = "black"
+    ..font = "bold 72px Arial"
+    ..textAlign = "center"
+    ..fillText(text, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 25);
 }
 
 void sendShotRequest(Cannon cannon) {
@@ -223,10 +255,11 @@ void redrawCanvas() {
       ..clearRect(0, 0, masterCanvas.width, masterCanvas.height)
       ..drawImage(landscapeCanvas, 0, 0)
       ..drawImage(cannonLeftCanvas, 0, 0)
-        ..drawImage(cannonRightCanvas, 0, 0)
+      ..drawImage(cannonRightCanvas, 0, 0)
       ..drawImage(windsockCanvas, 0, 0)
       ..drawImage(leftFlightpathCanvas, 0, 0)
-      ..drawImage(rightFlightpathCanvas, 0, 0);
+      ..drawImage(rightFlightpathCanvas, 0, 0)
+      ..drawImage(endCanvas, 0, 0);
 }
 
 bool hitGround(num x, num y) {
