@@ -13,6 +13,7 @@ public class LandscapeServiceImpl implements LandscapeService {
 
 	public static final int PARTS = 10;
 
+	private static final double MIN_HEIGHT = 0.05;
 	private static final double MAX_HEIGHT = 0.6;
 
 	public static final int LANDSCAPE_RESOLUTION = 1000;
@@ -36,7 +37,7 @@ public class LandscapeServiceImpl implements LandscapeService {
 		// Points between start and end
 		Random random = new Random();
 		for (int i = 1; i < landscapePoints.length - 1; i++) {
-			landscapePoints[i] = random.nextFloat() * MAX_HEIGHT;
+			landscapePoints[i] = random.nextFloat() * MAX_HEIGHT + MIN_HEIGHT;
 		}
 
 		List<Double> landscape = new ArrayList<Double>();

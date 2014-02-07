@@ -30,10 +30,12 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 	public void handle(WebSocketSession session, ConnectMessage message) {
 		if (this.pendingGame == null) {
 			this.pendingGame = new Game();
+			initGame(pendingGame);
 			this.pendingGame.setLeftPlayer(session);
+			this.pendingGame.getPlayerNames().put(PlayerType.LEFT, message.getName());
 		} else {
 			this.pendingGame.setRightPlayer(session);
-			initGame(pendingGame);
+			this.pendingGame.getPlayerNames().put(PlayerType.RIGHT, message.getName());
 			this.gameRepository.saveGame(this.pendingGame);
 			sendInitMessage(this.pendingGame);
 			this.pendingGame = null;
@@ -45,18 +47,19 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 		remainingShots.put(PlayerType.LEFT, Game.NUMBER_OF_BOMBS);
 		remainingShots.put(PlayerType.RIGHT, Game.NUMBER_OF_BOMBS);
 		game.setRemainingShots(remainingShots);
+
+		Map<PlayerType, String> playerNames = new HashMap<PlayerType, String>();
+		game.setPlayerNames(playerNames);
 	}
 
 	private void sendInitMessage(Game game) {
 		InitMessage initMessage = new InitMessage();
-		initMessage.setDuration(Game.DURATION);
-		initMessage.setNumberOfBombs(Game.NUMBER_OF_BOMBS);
-
+		initMessage.setRemainingShots(game.getRemainingShots());
 		initMessage.setCanonLeftX(Game.CANON_LEFT_X);
 		initMessage.setCanonRightX(Game.CANON_RIGHT_X);
 		initMessage.setWind(getWind());
-
 		initMessage.setLandscape(landscapeService.getLandscape());
+		initMessage.setPlayerNames(game.getPlayerNames());
 
 		initMessage.setPlayerType(PlayerType.LEFT);
 		messageService.send(initMessage, game.getLeftPlayer());

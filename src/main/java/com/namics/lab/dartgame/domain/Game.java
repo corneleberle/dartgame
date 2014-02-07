@@ -10,7 +10,6 @@ import com.namics.lab.dartgame.service.impl.LandscapeServiceImpl;
 public class Game {
 
 	public final static int NUMBER_OF_BOMBS = 10;
-	public final static double DURATION = 60;
 	public final static int CANON_LEFT_X = LandscapeServiceImpl.LANDSCAPE_RESOLUTION / LandscapeServiceImpl.PARTS;
 	public final static int CANON_RIGHT_X = LandscapeServiceImpl.LANDSCAPE_RESOLUTION / LandscapeServiceImpl.PARTS * (LandscapeServiceImpl.PARTS - 1);
 
@@ -20,6 +19,8 @@ public class Game {
 	private WebSocketSession leftPlayer;
 
 	private WebSocketSession rightPlayer;
+
+	private Map<PlayerType, String> playerNames;
 
 	private Map<PlayerType, Integer> remainingShots;
 
@@ -37,6 +38,14 @@ public class Game {
 
 	public void setRightPlayer(WebSocketSession rightPlayer) {
 		this.rightPlayer = rightPlayer;
+	}
+
+	public Map<PlayerType, String> getPlayerNames() {
+		return playerNames;
+	}
+
+	public void setPlayerNames(Map<PlayerType, String> playerNames) {
+		this.playerNames = playerNames;
 	}
 
 	public Map<PlayerType, Integer> getRemainingShots() {

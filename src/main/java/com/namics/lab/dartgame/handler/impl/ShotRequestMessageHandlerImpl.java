@@ -57,6 +57,7 @@ public class ShotRequestMessageHandlerImpl implements MessageHandler<ShotRequest
 		shotMessage.setAngle(message.getAngle());
 		shotMessage.setPower(message.getPower());
 		shotMessage.setShotId(shotId);
+		shotMessage.setRemainingShots(game.getRemainingShots());
 
 		messageService.send(shotMessage, game.getLeftPlayer(), game.getRightPlayer());
 	}

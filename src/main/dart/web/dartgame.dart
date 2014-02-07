@@ -25,7 +25,7 @@ final InputElement powerSlider = querySelector("#powerSlider");
 final InputElement powerMinus = querySelector("#powerMinus");
 final InputElement powerPlus = querySelector("#powerPlus");
 final InputElement triggerButton = querySelector("#trigger");
-final InputElement nameText = querySelector("#name");
+final InputElement myNameText = querySelector("#myName");
 final InputElement connectButton = querySelector("#connect");
 final ImageElement windsockImage = querySelector("#windsock");
 
@@ -52,7 +52,6 @@ final CanvasElement endCanvas = new CanvasElement(width: CANVAS_WIDTH, height: C
 WebSocket webSocket = null;
 List<num> landscape = new List(1000);
 
-
 final myCannon = new Cannon();
 final enemyCannon = new Cannon();
 Cannon leftCannon;
@@ -67,7 +66,7 @@ void main() {
   powerMinus.onClick.listen((e) => updateSlider(powerSlider, -1));
   powerPlus.onClick.listen((e) => updateSlider(powerSlider, 1));
   triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
-  connectButton.onClick.listen(connect);  
+  connectButton.onClick.listen(connect);
 }
 
 void updateSlider(InputElement slider, num delta) {
@@ -106,7 +105,11 @@ void drawCannon(Cannon cannon) {
       ..strokeStyle = CANNON_COLOR
       ..arc(scaleX(cannon.pos.x), scaleY(cannon.pos.y), 5, 0, PI, true)
       ..closePath()
-      ..stroke();
+      ..stroke()
+      ..fillStyle = CANNON_COLOR
+      ..font = "18px Arial"
+      ..textAlign = "center"
+      ..fillText(cannon.remainingShots.toString(), scaleX(cannon.pos.x), scaleY(cannon.pos.y) + 20);
   tempCanvas.context2D
       ..save()
       ..lineWidth = 5
@@ -145,7 +148,7 @@ void drawShotCurve(Cannon cannon, CanvasElement canvas) {
       flying = false;
     } else if (hitGround(x,y)) {
       flying = false;
-      drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, 4);
+      drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, CANVAS_WIDTH * HIT_TOLERANCE);
 
       if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
         disableControls();
@@ -276,33 +279,37 @@ num scaleY(num y) {
 }
 
 
+void printEnemyName(String name) {
+  final Element enemyNameText = querySelector("#enemyName");
+  enemyNameText.text = "vs. " + name;
+}
 
 
 void outputMsg(String msg) {
   var output = querySelector('#output');
   var text = msg;
   if (!output.text.isEmpty) {
-    text = "${output.text}\n${text}";
+    text = "${output.text}\n- - - - - -\n${text}";
   }
   output.text = text;
 }
 
 void connect(MouseEvent event) {
-  if (nameText.value.isEmpty) {
-    window.alert("Please enter a name.");
+  if (myNameText.value.isEmpty) {
+    window.alert("Please enter your name.");
     return;
   }
   
   webSocket = new WebSocket('ws://localhost:8080/dartgame/controller');  
   
   webSocket.onOpen.listen((e) {
-    ConnectMessage connectMessage = new ConnectMessage(nameText.value);
+    ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
     
     // Disable connect button and name text input element
     connectButton.disabled = true;
-    nameText.disabled = true;
+    myNameText.disabled = true;
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
@@ -312,22 +319,29 @@ void connect(MouseEvent event) {
         List<double> landscape2 = message["landscape"];
         landscape = landscape2;
         
+        String enemyName;
         wind = message["wind"] / 1000;
         Point cannonLeftPos = getCannonPos(landscape, message["canonLeftX"]);
         Point cannonRightPos = getCannonPos(landscape, message["canonRightX"]);
         
         if (message["playerType"] == "LEFT") {
+          enemyName = message["playerNames"]["RIGHT"];
           myCannon.pos = cannonLeftPos;
+          myCannon.remainingShots = message["remainingShots"]["LEFT"];
           enemyCannon.pos = cannonRightPos;
+          enemyCannon.remainingShots = message["remainingShots"]["RIGHT"];
           leftCannon = myCannon;
           rightCannon = enemyCannon;
         } else {
+          enemyName = message["playerNames"]["LEFT"];
           myCannon.pos = cannonRightPos;
+          myCannon.remainingShots = message["remainingShots"]["RIGHT"];
           enemyCannon.pos = cannonLeftPos;
+          enemyCannon.remainingShots = message["remainingShots"]["LEFT"];
           leftCannon = enemyCannon;
           rightCannon = myCannon;
         }
-        
+        printEnemyName(enemyName);
         drawLandscape(landscape);
         drawWindsock(wind);
         updateCannon(myCannon);
@@ -341,11 +355,13 @@ void connect(MouseEvent event) {
         if (message["shooter"] == "LEFT") {
           leftCannon.angle = angle;
           leftCannon.power = power;
+          leftCannon.remainingShots = message["remainingShots"]["LEFT"];
           drawCannon(leftCannon);
           drawShotCurve(leftCannon, leftFlightpathCanvas);
         } else {
           rightCannon.angle = angle;
           rightCannon.power = power;
+          rightCannon.remainingShots = message["remainingShots"]["RIGHT"];
           drawCannon(rightCannon);
           drawShotCurve(rightCannon, rightFlightpathCanvas);
         }
@@ -363,6 +379,8 @@ class Cannon {
   Point pos = new Point(0,0);
   double angle = 0.0;
   double power = 0.0;
+  num remainingShots = 0;
+  String player;
   
   Cannon () { }
 }

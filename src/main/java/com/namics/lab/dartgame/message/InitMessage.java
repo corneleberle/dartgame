@@ -1,6 +1,7 @@
 package com.namics.lab.dartgame.message;
 
 import java.util.List;
+import java.util.Map;
 
 public class InitMessage extends AbstractMessage {
 
@@ -9,13 +10,11 @@ public class InitMessage extends AbstractMessage {
 		setMessageType(MessageType.INIT);
 	}
 
-	private double duration;
+	private Map<PlayerType, Integer> remainingShots;
 
-	private int numberOfBombs;
+	private Map<PlayerType, String> playerNames;
 
 	private PlayerType playerType;
-
-	private List<Double> landscape;
 
 	private int canonLeftX;
 
@@ -23,20 +22,22 @@ public class InitMessage extends AbstractMessage {
 
 	private int wind; // -1000 to 1000
 
-	public double getDuration() {
-		return duration;
+	private List<Double> landscape;
+
+	public Map<PlayerType, Integer> getRemainingShots() {
+		return remainingShots;
 	}
 
-	public void setDuration(double duration) {
-		this.duration = duration;
+	public void setRemainingShots(Map<PlayerType, Integer> remainingShots) {
+		this.remainingShots = remainingShots;
 	}
 
-	public int getNumberOfBombs() {
-		return numberOfBombs;
+	public Map<PlayerType, String> getPlayerNames() {
+		return playerNames;
 	}
 
-	public void setNumberOfBombs(int numberOfBombs) {
-		this.numberOfBombs = numberOfBombs;
+	public void setPlayerNames(Map<PlayerType, String> playerNames) {
+		this.playerNames = playerNames;
 	}
 
 	public PlayerType getPlayerType() {
@@ -45,14 +46,6 @@ public class InitMessage extends AbstractMessage {
 
 	public void setPlayerType(PlayerType playerType) {
 		this.playerType = playerType;
-	}
-
-	public List<Double> getLandscape() {
-		return landscape;
-	}
-
-	public void setLandscape(List<Double> landscape) {
-		this.landscape = landscape;
 	}
 
 	public int getCanonLeftX() {
@@ -77,6 +70,14 @@ public class InitMessage extends AbstractMessage {
 
 	public void setWind(int wind) {
 		this.wind = wind;
+	}
+
+	public List<Double> getLandscape() {
+		return landscape;
+	}
+
+	public void setLandscape(List<Double> landscape) {
+		this.landscape = landscape;
 	}
 
 }

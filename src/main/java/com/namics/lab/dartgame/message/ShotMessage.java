@@ -1,5 +1,7 @@
 package com.namics.lab.dartgame.message;
 
+import java.util.Map;
+
 public class ShotMessage extends AbstractMessage {
 
 	private PlayerType shooter;
@@ -9,6 +11,8 @@ public class ShotMessage extends AbstractMessage {
 	private double power;
 
 	private int shotId;
+
+	private Map<PlayerType, Integer> remainingShots;
 
 	public PlayerType getShooter() {
 		return shooter;
@@ -40,6 +44,14 @@ public class ShotMessage extends AbstractMessage {
 
 	public void setShotId(int shotId) {
 		this.shotId = shotId;
+	}
+
+	public Map<PlayerType, Integer> getRemainingShots() {
+		return remainingShots;
+	}
+
+	public void setRemainingShots(Map<PlayerType, Integer> remainingShots) {
+		this.remainingShots = remainingShots;
 	}
 
 }
