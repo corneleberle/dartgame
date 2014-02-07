@@ -300,7 +300,7 @@ void connect(MouseEvent event) {
     return;
   }
   
-  webSocket = new WebSocket('ws://localhost:8080/dartgame/controller');  
+  webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');  
   
   webSocket.onOpen.listen((e) {
     ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
