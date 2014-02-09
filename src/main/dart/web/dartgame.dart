@@ -67,6 +67,15 @@ void main() {
   powerPlus.onClick.listen((e) => updateSlider(powerSlider, 1));
   triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   connectButton.onClick.listen(connect);
+  myNameText.onKeyPress.listen(handleKeyPress);
+  
+  myNameText.focus();
+}
+
+void handleKeyPress(KeyboardEvent event) {
+  if (event.keyCode == KeyCode.ENTER) {
+    connect(null);
+  }
 }
 
 void updateSlider(InputElement slider, num delta) {
@@ -300,9 +309,9 @@ void connect(MouseEvent event) {
     return;
   }
   
-  webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');  
+  webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');
   
-  webSocket.onOpen.listen((e) {
+  if (webSocket != null && webSocket.readyState == WebSocket.OPEN) {
     ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
@@ -310,7 +319,9 @@ void connect(MouseEvent event) {
     // Disable connect button and name text input element
     connectButton.disabled = true;
     myNameText.disabled = true;
-  });
+  } else {
+    window.alert("Could not connect to Server.");
+  }
   
   webSocket.onMessage.listen((MessageEvent e) {
     Map message = JSON.decode(e.data);
