@@ -300,7 +300,6 @@ void outputMsg(String msg) {
   TextAreaElement output = querySelector('#output');
   var text = msg;
   if (!output.text.isEmpty) {
-    text = "${output.text}\n- - - - - -\n${text}";
     text = "${output.text}\n- - - - - - - - - - - - - - - - - - - - -\n${text}";
   }
   output.text = text;
