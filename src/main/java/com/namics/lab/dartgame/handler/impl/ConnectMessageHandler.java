@@ -28,7 +28,7 @@ public class ConnectMessageHandler implements MessageHandler<ConnectMessage> {
 
 	@Override
 	public void handle(WebSocketSession session, ConnectMessage message) {
-		if (this.pendingGame == null) {
+		if (this.pendingGame == null || !this.pendingGame.getLeftPlayer().isOpen()) {
 			this.pendingGame = new Game();
 			initGame(pendingGame);
 			this.pendingGame.setLeftPlayer(session);

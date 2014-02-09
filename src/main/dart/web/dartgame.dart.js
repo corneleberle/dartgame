@@ -7248,6 +7248,8 @@ CanvasRenderingContext2D: {"": "CanvasRenderingContext;",
 
 CharacterData: {"": "Node;data=,length=", "%": "CDATASection|CharacterData|Comment|ProcessingInstruction|Text"},
 
+CloseEvent: {"": "Event;", "%": "CloseEvent"},
+
 CompositionEvent: {"": "UIEvent;data=", "%": "CompositionEvent"},
 
 DomException: {"": "Interceptor;",
@@ -7268,7 +7270,7 @@ EmbedElement: {"": "HtmlElement;height},width%", "%": "HTMLEmbedElement"},
 
 ErrorEvent: {"": "Event;error=", "%": "ErrorEvent"},
 
-Event: {"": "Interceptor;", "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|MIDIConnectionEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"},
+Event: {"": "Interceptor;", "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|MIDIConnectionEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"},
 
 EventTarget: {"": "Interceptor;",
   addEventListener$3: function(receiver, type, listener, useCapture) {
@@ -7276,6 +7278,10 @@ EventTarget: {"": "Interceptor;",
   },
   removeEventListener$3: function(receiver, type, listener, useCapture) {
     return receiver.removeEventListener(type, H.convertDartClosureToJS(listener, 1), useCapture);
+  },
+  removeEventListener$2: function($receiver, type, listener) {
+    listener = H.convertDartClosureToJS(listener, 1);
+    return $receiver.removeEventListener(type, listener);
   },
   "%": "MediaStream;EventTarget"
 },
@@ -7289,6 +7295,13 @@ IFrameElement: {"": "HtmlElement;height},width%", "%": "HTMLIFrameElement"},
 ImageElement: {"": "HtmlElement;height},width%", "%": "HTMLImageElement"},
 
 InputElement: {"": "HtmlElement;disabled},height},maxLength},value=,valueAsNumber%,width%", "%": "HTMLInputElement"},
+
+KeyboardEvent: {"": "UIEvent;",
+  get$keyCode: function(receiver) {
+    return receiver.keyCode;
+  },
+  "%": "KeyboardEvent"
+},
 
 KeygenElement: {"": "HtmlElement;disabled}", "%": "HTMLKeygenElement"},
 
@@ -7389,7 +7402,7 @@ TextAreaElement: {"": "HtmlElement;disabled},value=", "%": "HTMLTextAreaElement"
 
 TextEvent: {"": "UIEvent;data=", "%": "TextEvent"},
 
-UIEvent: {"": "Event;", "%": "FocusEvent|KeyboardEvent|SVGZoomEvent|TouchEvent;UIEvent"},
+UIEvent: {"": "Event;", "%": "FocusEvent|SVGZoomEvent|TouchEvent;UIEvent"},
 
 VideoElement: {"": "MediaElement;height},width%", "%": "HTMLVideoElement"},
 
@@ -8027,6 +8040,19 @@ main: function() {
   t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.connect$closure), t1._useCapture);
   H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
   t2._tryResume$0();
+  t2 = $.get$myNameText();
+  t2.toString;
+  t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_keypress._eventType, false);
+  H.setRuntimeTypeInfo(t2, [null]);
+  t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(N.handleKeyPress$closure), t2._useCapture);
+  H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+  t1._tryResume$0();
+  $.get$myNameText().focus();
+},
+
+handleKeyPress: function($event) {
+  if (J.get$keyCode$x($event) === 13)
+    N.connect(null);
 },
 
 updateCannon: function(cannon) {
@@ -8389,10 +8415,15 @@ printEnemyName: function($name) {
 },
 
 outputMsg: function(msg) {
-  var output, t1;
+  var output, t1, text;
   output = document.querySelector("#output");
   t1 = output.textContent;
-  output.textContent = t1.length !== 0 ? t1 + "\n- - - - - - - - - - - - - - - - - - - - -\n" + H.S(msg) : msg;
+  if (t1.length !== 0) {
+    text = t1 + "\n- - - - - -\n" + H.S(msg);
+    text = output.textContent + "\n- - - - - - - - - - - - - - - - - - - - -\n" + text;
+  } else
+    text = msg;
+  output.textContent = text;
 },
 
 connect: function($event) {
@@ -8405,18 +8436,41 @@ connect: function($event) {
   $.webSocket = W.WebSocket_WebSocket("ws://" + H.S(t1.get$host(t1)) + ":8080/dartgame/controller", null);
   t1 = $.webSocket;
   t1.toString;
-  t1 = new W._EventStream(t1, C.EventStreamProvider_open._eventType, false);
+  t1 = new W._EventStream(t1, C.EventStreamProvider_close._eventType, false);
   H.setRuntimeTypeInfo(t1, [null]);
-  t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure()), t1._useCapture);
+  t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.onCloseConnectError$closure), t1._useCapture);
+  H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+  t2._tryResume$0();
+  t2 = $.webSocket;
+  t2.toString;
+  t2 = new W._EventStream(t2, C.EventStreamProvider_open._eventType, false);
+  H.setRuntimeTypeInfo(t2, [null]);
+  t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.connect_closure()), t2._useCapture);
+  H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+  t1._tryResume$0();
+  t1 = $.webSocket;
+  t1.toString;
+  t1 = new W._EventStream(t1, C.EventStreamProvider_error._eventType, false);
+  H.setRuntimeTypeInfo(t1, [null]);
+  t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure0()), t1._useCapture);
   H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
   t2._tryResume$0();
   t2 = $.webSocket;
   t2.toString;
   t2 = new W._EventStream(t2, C.EventStreamProvider_message._eventType, false);
   H.setRuntimeTypeInfo(t2, [null]);
-  t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.connect_closure0()), t2._useCapture);
+  t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.connect_closure1()), t2._useCapture);
   H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
   t1._tryResume$0();
+},
+
+onCloseConnectError: function(e) {
+  window.alert("Could not connect to Server.");
+},
+
+onCloseServerClose: function(e) {
+  window.alert("Connection to Server lost. Please reload.");
+  N.disableControls();
 },
 
 getCannonPos: function(landscape, posX) {
@@ -8519,7 +8573,15 @@ main_closure5: {"": "Closure;",
 
 connect_closure: {"": "Closure;",
   call$1: function(e) {
-    var connectMessage, payload;
+    var t1, t2, connectMessage, payload;
+    J.removeEventListener$2$x($.webSocket, "close", N.onCloseConnectError$closure);
+    t1 = $.webSocket;
+    t1.toString;
+    t1 = new W._EventStream(t1, C.EventStreamProvider_close._eventType, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.onCloseServerClose$closure), t1._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t2._tryResume$0();
     connectMessage = new F.ConnectMessage(J.get$value$x($.get$myNameText()), "CONNECT", P.DateTime$_now());
     payload = C.C_JsonCodec.encode$1(connectMessage.getBaseMap$0());
     $.webSocket.send(payload);
@@ -8532,6 +8594,13 @@ connect_closure: {"": "Closure;",
 },
 
 connect_closure0: {"": "Closure;",
+  call$1: function(e) {
+    window.alert("on error");
+  },
+  $is_args1: true
+},
+
+connect_closure1: {"": "Closure;",
   call$1: function(e) {
     var t1, message, t2, t3, cannonLeftPos, cannonRightPos, enemyName, angle, power;
     t1 = J.getInterceptor$x(e);
@@ -8588,6 +8657,11 @@ connect_closure0: {"": "Closure;",
           N.drawShotCurve($.rightCannon, $.get$rightFlightpathCanvas());
         }
       }
+      if (J.$eq(t2.$index(message, "messageType"), "STATUS"))
+        if (J.$eq(t2.$index(message, "messageType"), "STATUS")) {
+          window.alert("Player has left. Please relaod.");
+          N.disableControls();
+        }
       if (J.$eq(t2.$index(message, "messageType"), "CONNECT"))
         N.outputMsg("Not Supported by Client!");
     }
@@ -8748,7 +8822,10 @@ init.globalFunctions._defaultToEncodable$closure = P._defaultToEncodable$closure
 init.globalFunctions.identical$closure = P.identical$closure = new H.Closure$2(P.identical, "identical$closure");
 init.globalFunctions.identityHashCode$closure = P.identityHashCode$closure = new H.Closure$1(P.identityHashCode, "identityHashCode$closure");
 init.globalFunctions.main$closure = N.main$closure = new H.Closure$0(N.main, "main$closure");
+init.globalFunctions.handleKeyPress$closure = N.handleKeyPress$closure = new H.Closure$1(N.handleKeyPress, "handleKeyPress$closure");
 init.globalFunctions.connect$closure = N.connect$closure = new H.Closure$1(N.connect, "connect$closure");
+init.globalFunctions.onCloseConnectError$closure = N.onCloseConnectError$closure = new H.Closure$1(N.onCloseConnectError, "onCloseConnectError$closure");
+init.globalFunctions.onCloseServerClose$closure = N.onCloseServerClose$closure = new H.Closure$1(N.onCloseServerClose, "onCloseServerClose$closure");
 // Runtime type support
 J.JSInt.$isint = true;
 J.JSInt.$isObject = true;
@@ -8760,10 +8837,18 @@ J.JSNumber.$isObject = true;
 P.Duration.$isObject = true;
 P.Object.$isObject = true;
 J.JSArray.$isObject = true;
+W.Event.$isEvent = true;
 W.Event.$isObject = true;
 W.MouseEvent.$isMouseEvent = true;
+W.MouseEvent.$isEvent = true;
 W.MouseEvent.$isObject = true;
+W.KeyboardEvent.$isKeyboardEvent = true;
+W.KeyboardEvent.$isEvent = true;
+W.KeyboardEvent.$isObject = true;
+W.CloseEvent.$isEvent = true;
+W.CloseEvent.$isObject = true;
 W.MessageEvent.$isMessageEvent = true;
+W.MessageEvent.$isEvent = true;
 W.MessageEvent.$isObject = true;
 J.JSBool.$isbool = true;
 J.JSBool.$isObject = true;
@@ -8875,6 +8960,9 @@ C.CanvasRenderingContext2D_methods = W.CanvasRenderingContext2D.prototype;
 C.Duration_0 = new P.Duration(0);
 C.EventStreamProvider_change = new W.EventStreamProvider("change");
 C.EventStreamProvider_click = new W.EventStreamProvider("click");
+C.EventStreamProvider_close = new W.EventStreamProvider("close");
+C.EventStreamProvider_error = new W.EventStreamProvider("error");
+C.EventStreamProvider_keypress = new W.EventStreamProvider("keypress");
 C.EventStreamProvider_message = new W.EventStreamProvider("message");
 C.EventStreamProvider_open = new W.EventStreamProvider("open");
 C.JSArray_methods = J.JSArray.prototype;
@@ -9120,6 +9208,9 @@ J.get$isNotEmpty$asx = function(receiver) {
 J.get$iterator$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).get$iterator(receiver);
 };
+J.get$keyCode$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$keyCode(receiver);
+};
 J.get$last$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).get$last(receiver);
 };
@@ -9134,6 +9225,9 @@ J.get$valueAsNumber$x = function(receiver) {
 };
 J.get$width$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$width(receiver);
+};
+J.removeEventListener$2$x = function(receiver, a0, a1) {
+  return J.getInterceptor$x(receiver).removeEventListener$2(receiver, a0, a1);
 };
 J.removeEventListener$3$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).removeEventListener$3(receiver, a0, a1, a2);

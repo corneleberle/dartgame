@@ -1,6 +1,7 @@
 package com.namics.lab.dartgame.repository.imp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ import com.namics.lab.dartgame.repository.GameRepository;
 @Repository
 public class GameRepositoryImpl implements GameRepository {
 
-	List<Game> games = new ArrayList<Game>();
+	List<Game> games = Collections.synchronizedList(new ArrayList<Game>());
 
 	@Override
 	public void saveGame(Game game) {

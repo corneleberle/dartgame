@@ -18,12 +18,6 @@ public class LandscapeServiceImpl implements LandscapeService {
 
 	public static final int LANDSCAPE_RESOLUTION = 1000;
 
-	public static void main(String[] args) {
-		for (Double d : new LandscapeServiceImpl().getLandscape()) {
-			System.out.println(d);
-		}
-	}
-
 	@Override
 	public List<Double> getLandscape() {
 		double[] landscapePoints = new double[PARTS + 1];

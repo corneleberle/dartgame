@@ -30,11 +30,11 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(chatWebSocketHandler(), "/controller");
+		registry.addHandler(dartGameWebSocketHandler(), "/controller");
 	}
 
 	@Bean
-	public WebSocketHandler chatWebSocketHandler() {
+	public WebSocketHandler dartGameWebSocketHandler() {
 		return new DartGameWebSocketHandler();
 	}
 

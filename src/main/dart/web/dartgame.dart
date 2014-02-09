@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'messages.dart';
 
+
 const String WAITING_FOR_ENEMY = "Waiting for enemy...";
 const String SHOT_COLOR = "orange";
 const String SURFACE_COLOR = "black";
@@ -67,6 +68,15 @@ void main() {
   powerPlus.onClick.listen((e) => updateSlider(powerSlider, 1));
   triggerButton.onClick.listen((e) => sendShotRequest(myCannon));
   connectButton.onClick.listen(connect);
+  myNameText.onKeyPress.listen(handleKeyPress);
+  
+  myNameText.focus();
+}
+
+void handleKeyPress(KeyboardEvent event) {
+  if (event.keyCode == KeyCode.ENTER) {
+    connect(null);
+  }
 }
 
 void updateSlider(InputElement slider, num delta) {
@@ -290,6 +300,7 @@ void outputMsg(String msg) {
   var output = querySelector('#output');
   var text = msg;
   if (!output.text.isEmpty) {
+    text = "${output.text}\n- - - - - -\n${text}";
     text = "${output.text}\n- - - - - - - - - - - - - - - - - - - - -\n${text}";
   }
   output.text = text;
@@ -301,9 +312,14 @@ void connect(MouseEvent event) {
     return;
   }
   
-  webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');  
+  webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');
+  
+  webSocket.onClose.listen(onCloseConnectError);
   
   webSocket.onOpen.listen((e) {
+    webSocket.removeEventListener('close', onCloseConnectError);
+    webSocket.onClose.listen(onCloseServerClose);
+    
     ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
@@ -313,6 +329,10 @@ void connect(MouseEvent event) {
     connectButton.disabled = true;
     myNameText.disabled = true;
     printEnemyName(WAITING_FOR_ENEMY);
+  });
+  
+  webSocket.onError.listen((e) {
+    window.alert("on error");
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
@@ -369,7 +389,12 @@ void connect(MouseEvent event) {
           drawShotCurve(rightCannon, rightFlightpathCanvas);
         }
       }
-      
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_STATUS){
+        if (message["messageType"] == "STATUS") {
+          window.alert("Player has left. Please relaod.");
+          disableControls();
+        }
+      }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
         outputMsg("Not Supported by Client!");
       }
@@ -379,6 +404,14 @@ void connect(MouseEvent event) {
   });
 }
 
+void onCloseConnectError(Event e) {
+  window.alert("Could not connect to Server.");
+}
+
+void onCloseServerClose(Event e) {
+  window.alert("Connection to Server lost. Please reload.");
+  disableControls();
+}
 
 class Cannon {
   Point pos = new Point(0,0);
