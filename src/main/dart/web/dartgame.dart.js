@@ -6158,7 +6158,7 @@ DateTime_toString_twoDigits: {"": "Closure;",
 
 Duration: {"": "Object;_duration<",
   $add: function(_, other) {
-    return P.Duration$(0, 0, C.JSNumber_methods.$add(this._duration, other.get$_duration()), 0, 0, 0);
+    return P.Duration$(0, 0, this._duration + other.get$_duration(), 0, 0, 0);
   },
   $sub: function(_, other) {
     return P.Duration$(0, 0, this._duration - other.get$_duration(), 0, 0, 0);
@@ -7579,11 +7579,14 @@ Point: {"": "Object;x>,y>",
   },
   $add: function(_, other) {
     var t1, t2;
-    t1 = C.JSNumber_methods.$add(this.x, C.JSNumber_methods.get$x(other));
-    t2 = J.$add$ns(this.y, C.JSNumber_methods.get$y(other));
-    t2 = new P.Point(t1, t2);
-    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(this, "Point", 0)]);
-    return t2;
+    t1 = J.getInterceptor$x(other);
+    t2 = t1.get$x(other);
+    if (typeof t2 !== "number")
+      throw H.iae(t2);
+    t1 = J.$add$ns(this.y, t1.get$y(other));
+    t1 = new P.Point(this.x + t2, t1);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(this, "Point", 0)]);
+    return t1;
   },
   $sub: function(_, other) {
     var t1, t2;
@@ -8251,8 +8254,11 @@ drawEnd: function(text) {
 },
 
 sendShotRequest: function(cannon) {
-  var payload = C.C_JsonCodec.encode$1(new F.ShotRequestMessage(cannon.angle, cannon.power, P.DateTime$_now(), "Spieler 1", "SHOT_REQUEST").getBaseMap$0());
+  var message, payload;
+  message = new F.ShotRequestMessage(cannon.angle, cannon.power, "SHOT_REQUEST", P.DateTime$_now());
+  payload = C.C_JsonCodec.encode$1(message.getBaseMap$0());
   $.webSocket.send(payload);
+  N.outputMsg(message.messageType + ":\n" + C.C_JsonCodec.encode$1(message.getBaseMap$0()));
 },
 
 drawCircle: function(canvas, x, y, color, radius) {
@@ -8379,14 +8385,14 @@ redrawCanvas: function() {
 },
 
 printEnemyName: function($name) {
-  document.querySelector("#enemyName").textContent = C.JSString_methods.$add("vs. ", $name);
+  document.querySelector("#enemyName").textContent = $name;
 },
 
 outputMsg: function(msg) {
   var output, t1;
   output = document.querySelector("#output");
   t1 = output.textContent;
-  output.textContent = t1.length !== 0 ? t1 + "\n- - - - - -\n" + H.S(msg) : msg;
+  output.textContent = t1.length !== 0 ? t1 + "\n- - - - - - - - - - - - - - - - - - - - -\n" + H.S(msg) : msg;
 },
 
 connect: function($event) {
@@ -8513,10 +8519,14 @@ main_closure5: {"": "Closure;",
 
 connect_closure: {"": "Closure;",
   call$1: function(e) {
-    var payload = C.C_JsonCodec.encode$1(new F.ConnectMessage(J.get$value$x($.get$myNameText()), P.DateTime$_now(), "Spieler 1", "CONNECT").getBaseMap$0());
+    var connectMessage, payload;
+    connectMessage = new F.ConnectMessage(J.get$value$x($.get$myNameText()), "CONNECT", P.DateTime$_now());
+    payload = C.C_JsonCodec.encode$1(connectMessage.getBaseMap$0());
     $.webSocket.send(payload);
+    N.outputMsg(connectMessage.messageType + ":\n" + C.C_JsonCodec.encode$1(connectMessage.getBaseMap$0()));
     J.set$disabled$x($.get$connectButton(), true);
     J.set$disabled$x($.get$myNameText(), true);
+    N.printEnemyName("Waiting for enemy...");
   },
   $is_args1: true
 },
@@ -8553,7 +8563,7 @@ connect_closure0: {"": "Closure;",
           $.leftCannon = $.get$enemyCannon();
           $.rightCannon = $.get$myCannon();
         }
-        N.printEnemyName(enemyName);
+        N.printEnemyName(C.JSString_methods.$add("vs. ", enemyName));
         N.drawLandscape($.get$landscape());
         N.drawWindsock($.wind);
         N.updateCannon($.get$myCannon());
@@ -8581,7 +8591,7 @@ connect_closure0: {"": "Closure;",
       if (J.$eq(t2.$index(message, "messageType"), "CONNECT"))
         N.outputMsg("Not Supported by Client!");
     }
-    N.outputMsg(t1.get$data(e));
+    N.outputMsg(J.$add$ns(J.$add$ns(J.$index$asx(message, "messageType"), ":\n"), t1.get$data(e)));
   },
   $is_args1: true
 },
@@ -8692,15 +8702,17 @@ AbstractMessage: {"": "Object;",
   getBaseMap$0: function() {
     var mapData, t1;
     mapData = P.LinkedHashMap_LinkedHashMap(null, null, null, null, null);
+    mapData.$indexSet(mapData, "messageType", this.messageType);
     t1 = this.sent;
     mapData.$indexSet(mapData, "sent", t1.toString$0(t1));
-    mapData.$indexSet(mapData, "sender", this.sender);
-    mapData.$indexSet(mapData, "messageType", this.messageType);
     return mapData;
+  },
+  toString$0: function(_) {
+    return this.messageType + ":\n" + C.C_JsonCodec.encode$1(this.getBaseMap$0());
   }
 },
 
-ConnectMessage: {"": "AbstractMessage;name,sent,sender,messageType",
+ConnectMessage: {"": "AbstractMessage;name,messageType,sent",
   getBaseMap$0: function() {
     var mapData = F.AbstractMessage.prototype.getBaseMap$0.call(this);
     mapData.$indexSet(mapData, "name", this.name);
@@ -8708,7 +8720,7 @@ ConnectMessage: {"": "AbstractMessage;name,sent,sender,messageType",
   }
 },
 
-ShotRequestMessage: {"": "AbstractMessage;angle,power,sent,sender,messageType",
+ShotRequestMessage: {"": "AbstractMessage;angle,power,messageType,sent",
   getBaseMap$0: function() {
     var mapData = F.AbstractMessage.prototype.getBaseMap$0.call(this);
     mapData.$indexSet(mapData, "angle", this.angle);

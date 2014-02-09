@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'messages.dart';
 
-
+const String WAITING_FOR_ENEMY = "Waiting for enemy...";
 const String SHOT_COLOR = "orange";
 const String SURFACE_COLOR = "black";
 const String GROUND_COLOR = "lightgrey";
@@ -205,6 +205,7 @@ void sendShotRequest(Cannon cannon) {
   ShotRequestMessage message = new ShotRequestMessage(cannon.angle, cannon.power);
   String payload = message.toJson();
   webSocket.sendString(payload);
+  outputMsg(message.toString());
 }
 
 /// Draw a small circle representing the bomb.
@@ -281,7 +282,7 @@ num scaleY(num y) {
 
 void printEnemyName(String name) {
   final Element enemyNameText = querySelector("#enemyName");
-  enemyNameText.text = "vs. " + name;
+  enemyNameText.text = name;
 }
 
 
@@ -289,7 +290,7 @@ void outputMsg(String msg) {
   var output = querySelector('#output');
   var text = msg;
   if (!output.text.isEmpty) {
-    text = "${output.text}\n- - - - - -\n${text}";
+    text = "${output.text}\n- - - - - - - - - - - - - - - - - - - - -\n${text}";
   }
   output.text = text;
 }
@@ -306,10 +307,12 @@ void connect(MouseEvent event) {
     ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
-    
+    outputMsg(connectMessage.toString());
+
     // Disable connect button and name text input element
     connectButton.disabled = true;
     myNameText.disabled = true;
+    printEnemyName(WAITING_FOR_ENEMY);
   });
   
   webSocket.onMessage.listen((MessageEvent e) {
@@ -341,7 +344,7 @@ void connect(MouseEvent event) {
           leftCannon = enemyCannon;
           rightCannon = myCannon;
         }
-        printEnemyName(enemyName);
+        printEnemyName("vs. " + enemyName);
         drawLandscape(landscape);
         drawWindsock(wind);
         updateCannon(myCannon);
@@ -366,11 +369,13 @@ void connect(MouseEvent event) {
           drawShotCurve(rightCannon, rightFlightpathCanvas);
         }
       }
+      
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
         outputMsg("Not Supported by Client!");
       }
     }
-    outputMsg(e.data);
+    
+    outputMsg(message["messageType"] + ":\n" + e.data);
   });
 }
 

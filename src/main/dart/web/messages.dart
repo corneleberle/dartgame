@@ -11,15 +11,13 @@ class MessageTypesEnum{
 class PlayerTypeEnum{
   static const LEFT = "LEFT";
   static const RIGHT = "RIGHT";
-
 }
 
 abstract class AbstractMessage {
-  DateTime sent;
-  String sender;
   String messageType;
+  DateTime sent;
   
-  AbstractMessage(this.sent, this.sender, this.messageType);
+  AbstractMessage(this.sent, this.messageType);
   
   String toJson() {
     return JSON.encode(getBaseMap());
@@ -27,21 +25,22 @@ abstract class AbstractMessage {
   
   Map getBaseMap() {
     Map mapData = new Map();
-    mapData["sent"] = sent.toString();
-    mapData["sender"] = sender;
     mapData["messageType"] = messageType;
+    mapData["sent"] = sent.toString();
     return mapData;    
+  } 
+  
+  String toString() {
+    return this.messageType + ":\n" + this.toJson();
   }
-  
-  
 }
 
 class ConnectMessage extends AbstractMessage {
   String name;
   
-  ConnectMessage(this.name) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_CONNECT);
+  ConnectMessage(this.name) : super(new DateTime.now(), MessageTypesEnum.MESSAGE_TYPE_CONNECT);
   
-  ConnectMessage.custom(this.name, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  ConnectMessage.custom(this.name, DateTime sent, String messageType) : super(sent, messageType);
   
   Map getBaseMap() {
     Map mapData = super.getBaseMap();
@@ -56,9 +55,9 @@ class InitMessage extends AbstractMessage {
   String playerType;
   List<double> landscape;
   
-  InitMessage(this.duration, this.numberOfBombs, this.playerType, this.landscape) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_INIT);
+  InitMessage(this.duration, this.numberOfBombs, this.playerType, this.landscape) : super(new DateTime.now(), MessageTypesEnum.MESSAGE_TYPE_INIT);
   
-  InitMessage.custom(this.duration, this.numberOfBombs, this.playerType, this.landscape, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  InitMessage.custom(this.duration, this.numberOfBombs, this.playerType, this.landscape, DateTime sent, String messageType) : super(sent, messageType);
   
   Map getBaseMap() {
     Map mapData = super.getBaseMap();
@@ -71,13 +70,12 @@ class InitMessage extends AbstractMessage {
 }
 
 class ShotRequestMessage extends AbstractMessage {
-  
   double angle;
   double power;
   
-  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
+  ShotRequestMessage(this.angle, this.power) : super(new DateTime.now(), MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
   
-  ShotRequestMessage.custom(this.angle, this.power, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  ShotRequestMessage.custom(this.angle, this.power, DateTime sent, String messageType) : super(sent, messageType);
   
   Map getBaseMap() {
     Map mapData = super.getBaseMap(); 
@@ -88,13 +86,12 @@ class ShotRequestMessage extends AbstractMessage {
 }
 
 class ShotResultMessage extends AbstractMessage {
-  
   int shotId;
   bool strike;
   
-  ShotResultMessage(this.shotId, this.strike) : super(new DateTime.now(),"Spieler 1", MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
+  ShotResultMessage(this.shotId, this.strike) : super(new DateTime.now(), MessageTypesEnum.MESSAGE_TYPE_SHOT_REQUEST);
   
-  ShotResultMessage.custom(this.shotId, this.strike, DateTime sent, String sender, String messageType) : super(sent,sender,messageType);
+  ShotResultMessage.custom(this.shotId, this.strike, DateTime sent, String messageType) : super(sent, messageType);
   
   Map getBaseMap() {
     Map mapData = super.getBaseMap();

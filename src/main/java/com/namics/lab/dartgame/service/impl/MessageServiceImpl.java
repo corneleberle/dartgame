@@ -18,7 +18,6 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public void send(AbstractMessage message, WebSocketSession... sessions) {
 		message.setSent(new Date());
-		message.setSender("Server");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String payload;
