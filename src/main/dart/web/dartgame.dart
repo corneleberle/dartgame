@@ -70,6 +70,7 @@ void main() {
   connectButton.onClick.listen(connect);
   myNameText.onKeyPress.listen(handleKeyPress);
   
+  activateControls(false);
   myNameText.focus();
 }
 
@@ -161,11 +162,11 @@ void drawShotCurve(Cannon cannon, CanvasElement canvas) {
       drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, CANVAS_WIDTH * HIT_TOLERANCE);
 
       if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
-        disableControls();
+        activateControls(false);
         drawEnd("Loser");
         triggerButton.disabled = true;
       } else if ((x - enemyCannon.pos.x).abs() < HIT_TOLERANCE) {
-        disableControls();
+        activateControls(false);
         drawEnd("Winner");
       } 
         
@@ -181,16 +182,16 @@ void drawShotCurve(Cannon cannon, CanvasElement canvas) {
   redrawCanvas();
 }
 
-void disableControls() {
-  angleMinus.disabled = true;
-  angleSlider.disabled = true;
-  anglePlus.disabled = true;
+void activateControls(bool state) {
+  angleMinus.disabled = !state;
+  angleSlider.disabled = !state;
+  anglePlus.disabled = !state;
   
-  powerMinus.disabled = true;
-  powerSlider.disabled = true;
-  powerPlus.disabled = true;
+  powerMinus.disabled = !state;
+  powerSlider.disabled = !state;
+  powerPlus.disabled = !state;
   
-  triggerButton.disabled = true;
+  triggerButton.disabled = !state;
 }
 
 void drawEnd(String text) {
@@ -369,6 +370,7 @@ void connect(MouseEvent event) {
         drawWindsock(wind);
         updateCannon(myCannon);
         updateCannon(enemyCannon);
+        activateControls(true);
       }
       
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_SHOT){
@@ -391,8 +393,8 @@ void connect(MouseEvent event) {
       }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_STATUS){
         if (message["messageType"] == "STATUS") {
-          window.alert("Player has left. Please relaod.");
-          disableControls();
+          window.alert("Player has left. Please reload.");
+          activateControls(false);
         }
       }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
@@ -410,7 +412,7 @@ void onCloseConnectError(Event e) {
 
 void onCloseServerClose(Event e) {
   window.alert("Connection to Server lost. Please reload.");
-  disableControls();
+  activateControls(false);
 }
 
 class Cannon {

@@ -8047,6 +8047,7 @@ main: function() {
   t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(N.handleKeyPress$closure), t2._useCapture);
   H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
   t1._tryResume$0();
+  N.activateControls(false);
   $.get$myNameText().focus();
 },
 
@@ -8212,11 +8213,11 @@ drawShotCurve: function(cannon, canvas) {
           throw t4.$mul();
         N.drawCircle(canvas, 0 + t1 * x, t2 - t3 * y, "yellow", t4 * 0.03);
         if (Math.abs(x - $.get$myCannon().pos.x) < 0.03) {
-          N.disableControls();
+          N.activateControls(false);
           N.drawEnd("Loser");
           J.set$disabled$x($.get$triggerButton(), true);
         } else if (Math.abs(x - $.get$enemyCannon().pos.x) < 0.03) {
-          N.disableControls();
+          N.activateControls(false);
           N.drawEnd("Winner");
         }
         flying = false;
@@ -8241,14 +8242,15 @@ drawShotCurve: function(cannon, canvas) {
   N.redrawCanvas();
 },
 
-disableControls: function() {
-  J.set$disabled$x($.get$angleMinus(), true);
-  J.set$disabled$x($.get$angleSlider(), true);
-  J.set$disabled$x($.get$anglePlus(), true);
-  J.set$disabled$x($.get$powerMinus(), true);
-  J.set$disabled$x($.get$powerSlider(), true);
-  J.set$disabled$x($.get$powerPlus(), true);
-  J.set$disabled$x($.get$triggerButton(), true);
+activateControls: function(state) {
+  var t1 = !state;
+  J.set$disabled$x($.get$angleMinus(), t1);
+  J.set$disabled$x($.get$angleSlider(), t1);
+  J.set$disabled$x($.get$anglePlus(), t1);
+  J.set$disabled$x($.get$powerMinus(), t1);
+  J.set$disabled$x($.get$powerSlider(), t1);
+  J.set$disabled$x($.get$powerPlus(), t1);
+  J.set$disabled$x($.get$triggerButton(), t1);
 },
 
 drawEnd: function(text) {
@@ -8415,15 +8417,11 @@ printEnemyName: function($name) {
 },
 
 outputMsg: function(msg) {
-  var output, t1, text;
+  var output, t1;
   output = document.querySelector("#output");
   t1 = output.textContent;
-  if (t1.length !== 0) {
-    text = t1 + "\n- - - - - -\n" + H.S(msg);
-    text = output.textContent + "\n- - - - - - - - - - - - - - - - - - - - -\n" + text;
-  } else
-    text = msg;
-  output.textContent = text;
+  output.textContent = t1.length !== 0 ? t1 + "\n- - - - - - - - - - - - - - - - - - - - -\n" + H.S(msg) : msg;
+  output.scrollTop = output.scrollHeight;
 },
 
 connect: function($event) {
@@ -8470,7 +8468,7 @@ onCloseConnectError: function(e) {
 
 onCloseServerClose: function(e) {
   window.alert("Connection to Server lost. Please reload.");
-  N.disableControls();
+  N.activateControls(false);
 },
 
 getCannonPos: function(landscape, posX) {
@@ -8637,6 +8635,7 @@ connect_closure1: {"": "Closure;",
         N.drawWindsock($.wind);
         N.updateCannon($.get$myCannon());
         N.updateCannon($.get$enemyCannon());
+        N.activateControls(true);
       }
       if (J.$eq(t2.$index(message, "messageType"), "SHOT")) {
         angle = t2.$index(message, "angle");
@@ -8659,8 +8658,8 @@ connect_closure1: {"": "Closure;",
       }
       if (J.$eq(t2.$index(message, "messageType"), "STATUS"))
         if (J.$eq(t2.$index(message, "messageType"), "STATUS")) {
-          window.alert("Player has left. Please relaod.");
-          N.disableControls();
+          window.alert("Player has left. Please reload.");
+          N.activateControls(false);
         }
       if (J.$eq(t2.$index(message, "messageType"), "CONNECT"))
         N.outputMsg("Not Supported by Client!");
