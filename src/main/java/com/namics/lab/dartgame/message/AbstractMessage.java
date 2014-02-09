@@ -14,8 +14,6 @@ public abstract class AbstractMessage {
 
 	private Date sent;
 
-	private String sender;
-
 	private MessageType messageType;
 
 	public Date getSent() {
@@ -24,14 +22,6 @@ public abstract class AbstractMessage {
 
 	public void setSent(Date sent) {
 		this.sent = sent;
-	}
-
-	public String getSender() {
-		return sender;
-	}
-
-	public void setSender(String sender) {
-		this.sender = sender;
 	}
 
 	public MessageType getMessageType() {
