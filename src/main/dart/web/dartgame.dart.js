@@ -846,13 +846,13 @@ var $$ = {};
     return x == null || typeof x === "string" || typeof x === "number" || typeof x === "boolean";
   },
   startRootIsolate_closure: {
-    "": "Closure:12;entry_0",
+    "": "Closure:13;entry_0",
     call$0: function() {
       this.entry_0.call$1([]);
     }
   },
   startRootIsolate_closure0: {
-    "": "Closure:12;entry_1",
+    "": "Closure:13;entry_1",
     call$0: function() {
       this.entry_1.call$2([], null);
     }
@@ -996,7 +996,7 @@ var $$ = {};
     "": "Object;"
   },
   IsolateNatives__processWorkerMessage_closure: {
-    "": "Closure:12;entryPoint_0,args_1,message_2,isSpawnUri_3,replyTo_4",
+    "": "Closure:13;entryPoint_0,args_1,message_2,isSpawnUri_3,replyTo_4",
     call$0: function() {
       var t1, t2, t3, t4, t5, t6, t7;
       t1 = this.entryPoint_0;
@@ -1071,7 +1071,7 @@ var $$ = {};
     $isSendPort: true
   },
   _NativeJsSendPort_send_closure: {
-    "": "Closure:12;box_0,this_1,shouldSerialize_2",
+    "": "Closure:13;box_0,this_1,shouldSerialize_2",
     call$0: function() {
       var t1, t2;
       t1 = this.this_1._receivePort;
@@ -1317,7 +1317,7 @@ var $$ = {};
     }
   },
   _Copier_visitMap_closure: {
-    "": "Closure:13;box_0,this_1",
+    "": "Closure:14;box_0,this_1",
     call$2: function(key, val) {
       var t1 = this.this_1;
       J.$indexSet$ax(this.box_0.copy_0, t1._dispatch$1(key), t1._dispatch$1(val));
@@ -2518,7 +2518,7 @@ var $$ = {};
     }
   },
   unwrapException_saveStackTrace: {
-    "": "Closure:14;ex_0",
+    "": "Closure:15;ex_0",
     call$1: function(error) {
       var t1 = J.getInterceptor(error);
       if (typeof error === "object" && error !== null && !!t1.$isError)
@@ -2542,31 +2542,31 @@ var $$ = {};
     }
   },
   invokeClosure_closure: {
-    "": "Closure:12;closure_0",
+    "": "Closure:13;closure_0",
     call$0: function() {
       return this.closure_0.call$0();
     }
   },
   invokeClosure_closure0: {
-    "": "Closure:12;closure_1,arg1_2",
+    "": "Closure:13;closure_1,arg1_2",
     call$0: function() {
       return this.closure_1.call$1(this.arg1_2);
     }
   },
   invokeClosure_closure1: {
-    "": "Closure:12;closure_3,arg1_4,arg2_5",
+    "": "Closure:13;closure_3,arg1_4,arg2_5",
     call$0: function() {
       return this.closure_3.call$2(this.arg1_4, this.arg2_5);
     }
   },
   invokeClosure_closure2: {
-    "": "Closure:12;closure_6,arg1_7,arg2_8,arg3_9",
+    "": "Closure:13;closure_6,arg1_7,arg2_8,arg3_9",
     call$0: function() {
       return this.closure_6.call$3(this.arg1_7, this.arg2_8, this.arg3_9);
     }
   },
   invokeClosure_closure3: {
-    "": "Closure:12;closure_10,arg1_11,arg2_12,arg3_13,arg4_14",
+    "": "Closure:13;closure_10,arg1_11,arg2_12,arg3_13,arg4_14",
     call$0: function() {
       return this.closure_10.call$4(this.arg1_11, this.arg2_12, this.arg3_13, this.arg4_14);
     }
@@ -2778,13 +2778,13 @@ var $$ = {};
     $isTypeImpl: true
   },
   initHooks_closure: {
-    "": "Closure:14;getTag_0",
+    "": "Closure:15;getTag_0",
     call$1: function(o) {
       return this.getTag_0(o);
     }
   },
   initHooks_closure0: {
-    "": "Closure:15;getUnknownTag_1",
+    "": "Closure:16;getUnknownTag_1",
     call$2: function(o, tag) {
       return this.getUnknownTag_1(o, tag);
     }
@@ -3511,19 +3511,19 @@ var $$ = {};
       }}
   },
   _Future__addListener_closure: {
-    "": "Closure:12;this_0,listener_1",
+    "": "Closure:13;this_0,listener_1",
     call$0: function() {
       P._Future__propagateToListeners(this.this_0, this.listener_1);
     }
   },
   _Future__chainFutures_closure: {
-    "": "Closure:14;target_0",
+    "": "Closure:15;target_0",
     call$1: function(value) {
       this.target_0._complete$1(value);
     }
   },
   _Future__chainFutures_closure0: {
-    "": "Closure:16;target_1",
+    "": "Closure:17;target_1",
     call$2: function(error, stackTrace) {
       this.target_1._completeError$2(error, stackTrace);
     },
@@ -3532,19 +3532,19 @@ var $$ = {};
     }
   },
   _Future__asyncComplete_closure: {
-    "": "Closure:12;this_0,value_1",
+    "": "Closure:13;this_0,value_1",
     call$0: function() {
       this.this_0._complete$1(this.value_1);
     }
   },
   _Future__propagateToListeners_closure: {
-    "": "Closure:12;box_2,listener_3",
+    "": "Closure:13;box_2,listener_3",
     call$0: function() {
       P._Future__propagateToListeners(this.box_2.source_4, this.listener_3);
     }
   },
   _Future__propagateToListeners_closure0: {
-    "": "Closure:12;box_2,box_1,hasError_4,listener_5",
+    "": "Closure:13;box_2,box_1,hasError_4,listener_5",
     call$0: function() {
       var t1, value, asyncError, test, matchesTest, errorCallback, e, s, t2, t3, t4, t5, completeResult, exception;
       t1 = {};
@@ -3617,13 +3617,13 @@ var $$ = {};
     }
   },
   _Future__propagateToListeners__closure: {
-    "": "Closure:14;box_2,listener_6",
+    "": "Closure:15;box_2,listener_6",
     call$1: function(ignored) {
       P._Future__propagateToListeners(this.box_2.source_4, this.listener_6);
     }
   },
   _Future__propagateToListeners__closure0: {
-    "": "Closure:16;box_0,listener_7",
+    "": "Closure:17;box_0,listener_7",
     call$2: function(error, stackTrace) {
       var t1, t2, t3, completeResult;
       t1 = this.box_0;
@@ -3699,43 +3699,43 @@ var $$ = {};
     }
   },
   Stream_forEach__closure: {
-    "": "Closure:12;action_4,element_5",
+    "": "Closure:13;action_4,element_5",
     call$0: function() {
       return this.action_4.call$1(this.element_5);
     }
   },
   Stream_forEach__closure0: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(_) {
     }
   },
   Stream_forEach_closure0: {
-    "": "Closure:12;future_6",
+    "": "Closure:13;future_6",
     call$0: function() {
       this.future_6._complete$1(null);
     }
   },
   Stream_length_closure: {
-    "": "Closure:14;box_0",
+    "": "Closure:15;box_0",
     call$1: function(_) {
       var t1 = this.box_0;
       t1.count_0 = t1.count_0 + 1;
     }
   },
   Stream_length_closure0: {
-    "": "Closure:12;box_0,future_1",
+    "": "Closure:13;box_0,future_1",
     call$0: function() {
       this.future_1._complete$1(this.box_0.count_0);
     }
   },
   Stream_isEmpty_closure: {
-    "": "Closure:14;box_0,future_1",
+    "": "Closure:15;box_0,future_1",
     call$1: function(_) {
       P._cancelAndValue(this.box_0.subscription_0, this.future_1, false);
     }
   },
   Stream_isEmpty_closure0: {
-    "": "Closure:12;future_2",
+    "": "Closure:13;future_2",
     call$0: function() {
       this.future_2._complete$1(true);
     }
@@ -3754,7 +3754,7 @@ var $$ = {};
     }
   },
   Stream_last_closure0: {
-    "": "Closure:12;box_0,future_2",
+    "": "Closure:13;box_0,future_2",
     call$0: function() {
       var t1 = this.box_0;
       if (t1.foundResult_1) {
@@ -3783,7 +3783,7 @@ var $$ = {};
     }
   },
   Stream_elementAt_closure0: {
-    "": "Closure:12;box_0,future_3",
+    "": "Closure:13;box_0,future_3",
     call$0: function() {
       this.future_3._completeError$1(new P.RangeError("value " + this.box_0.index_0));
     }
@@ -3895,7 +3895,7 @@ var $$ = {};
     }
   },
   _StreamController__subscribe_closure: {
-    "": "Closure:12;this_0",
+    "": "Closure:13;this_0",
     call$0: function() {
       P._runGuarded(this.this_0.get$_onListen());
     }
@@ -4249,7 +4249,7 @@ var $$ = {};
     }
   },
   _PendingEvents_schedule_closure: {
-    "": "Closure:12;this_0,dispatch_1",
+    "": "Closure:13;this_0,dispatch_1",
     call$0: function() {
       var t1, oldState;
       t1 = this.this_0;
@@ -4286,19 +4286,19 @@ var $$ = {};
     }
   },
   _cancelAndError_closure: {
-    "": "Closure:12;future_0,error_1,stackTrace_2",
+    "": "Closure:13;future_0,error_1,stackTrace_2",
     call$0: function() {
       return this.future_0._completeError$2(this.error_1, this.stackTrace_2);
     }
   },
   _cancelAndErrorClosure_closure: {
-    "": "Closure:17;subscription_0,future_1",
+    "": "Closure:18;subscription_0,future_1",
     call$2: function(error, stackTrace) {
       return P._cancelAndError(this.subscription_0, this.future_1, error, stackTrace);
     }
   },
   _cancelAndValue_closure: {
-    "": "Closure:12;future_0,value_1",
+    "": "Closure:13;future_0,value_1",
     call$0: function() {
       return this.future_0._complete$1(this.value_1);
     }
@@ -4350,37 +4350,37 @@ var $$ = {};
     }
   },
   _BaseZone_bindCallback_closure: {
-    "": "Closure:12;this_0,registered_1",
+    "": "Closure:13;this_0,registered_1",
     call$0: function() {
       return this.this_0.runGuarded$1(this.registered_1);
     }
   },
   _BaseZone_bindCallback_closure0: {
-    "": "Closure:12;this_2,registered_3",
+    "": "Closure:13;this_2,registered_3",
     call$0: function() {
       return this.this_2.run$1(this.registered_3);
     }
   },
   _BaseZone_bindUnaryCallback_closure: {
-    "": "Closure:14;this_0,registered_1",
+    "": "Closure:15;this_0,registered_1",
     call$1: function(arg) {
       return this.this_0.runUnaryGuarded$2(this.registered_1, arg);
     }
   },
   _BaseZone_bindUnaryCallback_closure0: {
-    "": "Closure:14;this_2,registered_3",
+    "": "Closure:15;this_2,registered_3",
     call$1: function(arg) {
       return this.this_2.runUnary$2(this.registered_3, arg);
     }
   },
   _rootHandleUncaughtError_closure: {
-    "": "Closure:12;error_0,stackTrace_1",
+    "": "Closure:13;error_0,stackTrace_1",
     call$0: function() {
       P._scheduleAsyncCallback(new P._rootHandleUncaughtError__closure(this.error_0, this.stackTrace_1));
     }
   },
   _rootHandleUncaughtError__closure: {
-    "": "Closure:12;error_2,stackTrace_3",
+    "": "Closure:13;error_2,stackTrace_3",
     call$0: function() {
       var t1, trace, t2;
       t1 = this.error_2;
@@ -4740,7 +4740,7 @@ var $$ = {};
       }}
   },
   _HashMap_values_closure: {
-    "": "Closure:14;this_0",
+    "": "Closure:15;this_0",
     call$1: function(each) {
       var t1 = this.this_0;
       return t1.$index(t1, each);
@@ -4988,7 +4988,7 @@ var $$ = {};
       }}
   },
   _LinkedHashMap_values_closure: {
-    "": "Closure:14;this_0",
+    "": "Closure:15;this_0",
     call$1: function(each) {
       var t1 = this.this_0;
       return t1.$index(t1, each);
@@ -5553,7 +5553,7 @@ var $$ = {};
     $isEfficientLength: true
   },
   Maps_mapToString_closure: {
-    "": "Closure:13;box_0,result_1",
+    "": "Closure:14;box_0,result_1",
     call$2: function(k, v) {
       var t1 = this.box_0;
       if (!t1.first_0)
@@ -5669,7 +5669,7 @@ var $$ = {};
     static: {"": "ListQueue__INITIAL_CAPACITY"}
   },
   _ListQueueIterator: {
-    "": "Object;_queue,_end,_modificationCount,_collection$_position,_collection$_current",
+    "": "Object;_queue,_end,_modificationCount,_position,_collection$_current",
     get$current: function() {
       return this._collection$_current;
     },
@@ -5678,7 +5678,7 @@ var $$ = {};
       t1 = this._queue;
       if (this._modificationCount !== t1._modificationCount)
         H.throwExpression(P.ConcurrentModificationError$(t1));
-      t2 = this._collection$_position;
+      t2 = this._position;
       if (t2 === this._end) {
         this._collection$_current = null;
         return false;
@@ -5688,7 +5688,7 @@ var $$ = {};
       if (t2 >= t3)
         return H.ioore(t1, t2);
       this._collection$_current = t1[t2];
-      this._collection$_position = (t2 + 1 & t3 - 1) >>> 0;
+      this._position = (t2 + 1 & t3 - 1) >>> 0;
       return true;
     }
   }
@@ -5726,13 +5726,13 @@ var $$ = {};
     return (65536 + (lead.$and(lead, 1023) << 10 >>> 0) | tail & 1023) >>> 0;
   },
   _convertJsonToDart_closure: {
-    "": "Closure:13;",
+    "": "Closure:14;",
     call$2: function(key, value) {
       return value;
     }
   },
   _convertJsonToDart_walk: {
-    "": "Closure:14;revive_0",
+    "": "Closure:15;revive_0",
     call$1: function(e) {
       var list, t1, i, keys, map, key, proto;
       if (e == null || typeof e != "object")
@@ -5953,7 +5953,7 @@ var $$ = {};
       }}
   },
   _JsonStringifier_stringifyJsonValue_closure: {
-    "": "Closure:18;box_0,this_1",
+    "": "Closure:19;box_0,this_1",
     call$2: function(key, value) {
       var t1, t2, t3;
       t1 = this.box_0;
@@ -6162,7 +6162,7 @@ var $$ = {};
     return P.String_String$fromCharCodes(P.List_List$filled(1, charCode, J.JSInt));
   },
   NoSuchMethodError_toString_closure: {
-    "": "Closure:19;box_0",
+    "": "Closure:20;box_0",
     call$2: function(key, value) {
       var t1 = this.box_0;
       if (t1.i_1 > 0)
@@ -6224,7 +6224,7 @@ var $$ = {};
       }}
   },
   DateTime_toString_fourDigits: {
-    "": "Closure:20;",
+    "": "Closure:21;",
     call$1: function(n) {
       var absN, sign;
       absN = Math.abs(n);
@@ -6239,7 +6239,7 @@ var $$ = {};
     }
   },
   DateTime_toString_threeDigits: {
-    "": "Closure:20;",
+    "": "Closure:21;",
     call$1: function(n) {
       if (n >= 100)
         return "" + n;
@@ -6249,7 +6249,7 @@ var $$ = {};
     }
   },
   DateTime_toString_twoDigits: {
-    "": "Closure:20;",
+    "": "Closure:21;",
     call$1: function(n) {
       if (n >= 10)
         return "" + n;
@@ -6299,7 +6299,7 @@ var $$ = {};
       }}
   },
   Duration_toString_sixDigits: {
-    "": "Closure:20;",
+    "": "Closure:21;",
     call$1: function(n) {
       if (n >= 100000)
         return "" + n;
@@ -6315,7 +6315,7 @@ var $$ = {};
     }
   },
   Duration_toString_twoDigits: {
-    "": "Closure:20;",
+    "": "Closure:21;",
     call$1: function(n) {
       if (n >= 10)
         return "" + n;
@@ -6467,6 +6467,9 @@ var $$ = {};
       return key;
     },
     static: {"": "Expando__KEY_PROPERTY_NAME,Expando__EXPANDO_PROPERTY_NAME,Expando__keyCount"}
+  },
+  Function: {
+    "": "Object;"
   },
   Iterator: {
     "": "Object;"
@@ -6973,7 +6976,7 @@ var $$ = {};
       }}
   },
   Uri__makeScheme_isSchemeLowerCharacter: {
-    "": "Closure:21;",
+    "": "Closure:22;",
     call$1: function(ch) {
       var t1;
       if (ch < 128) {
@@ -6987,7 +6990,7 @@ var $$ = {};
     }
   },
   Uri__makeScheme_isSchemeCharacter: {
-    "": "Closure:21;",
+    "": "Closure:22;",
     call$1: function(ch) {
       var t1;
       if (ch < 128) {
@@ -7001,13 +7004,13 @@ var $$ = {};
     }
   },
   Uri__makePath_closure: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(s) {
       return P.Uri__uriEncode(C.List_qg4, s, C.Utf8Codec_false, false);
     }
   },
   Uri__makeQuery_closure: {
-    "": "Closure:13;box_0,result_1",
+    "": "Closure:14;box_0,result_1",
     call$2: function(key, value) {
       var t1 = this.box_0;
       if (!t1.first_0)
@@ -7021,7 +7024,7 @@ var $$ = {};
     }
   },
   Uri__normalize_isNormalizedHexDigit: {
-    "": "Closure:21;",
+    "": "Closure:22;",
     call$1: function(digit) {
       var t1;
       if (!(48 <= digit && digit <= 57))
@@ -7032,13 +7035,13 @@ var $$ = {};
     }
   },
   Uri__normalize_isLowerCaseHexDigit: {
-    "": "Closure:21;",
+    "": "Closure:22;",
     call$1: function(digit) {
       return 97 <= digit && digit <= 102;
     }
   },
   Uri__normalize_isUnreserved: {
-    "": "Closure:21;",
+    "": "Closure:22;",
     call$1: function(ch) {
       var t1;
       if (ch < 128) {
@@ -7052,7 +7055,7 @@ var $$ = {};
     }
   },
   Uri__normalize_normalizeHexDigit: {
-    "": "Closure:22;component_1,isNormalizedHexDigit_2,isLowerCaseHexDigit_3",
+    "": "Closure:23;component_1,isNormalizedHexDigit_2,isLowerCaseHexDigit_3",
     call$1: function(index) {
       var t1, codeUnit;
       t1 = this.component_1;
@@ -7066,7 +7069,7 @@ var $$ = {};
     }
   },
   Uri__normalize_decodeHexDigitPair: {
-    "": "Closure:22;component_4",
+    "": "Closure:23;component_4",
     call$1: function(index) {
       var t1, t2, $byte, i, codeUnit;
       for (t1 = this.component_4, t2 = J.getInterceptor$s(t1), $byte = 0, i = 0; i < 2; ++i) {
@@ -7100,19 +7103,19 @@ var $$ = {};
     }
   },
   Uri_hashCode_combine: {
-    "": "Closure:23;",
+    "": "Closure:24;",
     call$2: function(part, current) {
       return current * 31 + J.get$hashCode$(part) & 1073741823;
     }
   },
   Uri_parseIPv4Address_error: {
-    "": "Closure:24;",
+    "": "Closure:25;",
     call$1: function(msg) {
       throw H.wrapException(P.FormatException$("Illegal IPv4 address, " + msg));
     }
   },
   Uri_parseIPv4Address_closure: {
-    "": "Closure:14;error_0",
+    "": "Closure:15;error_0",
     call$1: function(byteString) {
       var $byte, t1;
       $byte = H.Primitives_parseInt(byteString, null, null);
@@ -7123,13 +7126,13 @@ var $$ = {};
     }
   },
   Uri_parseIPv6Address_error: {
-    "": "Closure:24;",
+    "": "Closure:25;",
     call$1: function(msg) {
       throw H.wrapException(P.FormatException$("Illegal IPv6 address, " + msg));
     }
   },
   Uri_parseIPv6Address_parseHex: {
-    "": "Closure:25;host_0,error_1",
+    "": "Closure:26;host_0,error_1",
     call$2: function(start, end) {
       var value, t1;
       if (end - start > 4)
@@ -7142,7 +7145,7 @@ var $$ = {};
     }
   },
   Uri_parseIPv6Address_closure: {
-    "": "Closure:14;parts_2",
+    "": "Closure:15;parts_2",
     call$1: function(value) {
       if (J.getInterceptor(value).$eq(value, -1))
         return P.List_List$filled((9 - this.parts_2.length) * 2, 0, null);
@@ -7154,7 +7157,7 @@ var $$ = {};
     }
   },
   Uri__uriEncode_byteToHex: {
-    "": "Closure:13;",
+    "": "Closure:14;",
     call$2: function($byte, buffer) {
       if (typeof $byte !== "number")
         return $byte.$shr();
@@ -7228,6 +7231,10 @@ var $$ = {};
     "": "Node;data=,length=",
     "%": "CDATASection|CharacterData|Comment|ProcessingInstruction|Text"
   },
+  CloseEvent: {
+    "": "Event;",
+    "%": "CloseEvent"
+  },
   CompositionEvent: {
     "": "UIEvent;data=",
     "%": "CompositionEvent"
@@ -7256,7 +7263,7 @@ var $$ = {};
   },
   Event: {
     "": "Interceptor;",
-    "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|MIDIConnectionEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"
+    "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|MIDIConnectionEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"
   },
   EventTarget: {
     "": "Interceptor;",
@@ -7265,6 +7272,10 @@ var $$ = {};
     },
     removeEventListener$3: function(receiver, type, listener, useCapture) {
       return receiver.removeEventListener(type, H.convertDartClosureToJS(listener, 1), useCapture);
+    },
+    removeEventListener$2: function($receiver, type, listener) {
+      listener = H.convertDartClosureToJS(listener, 1);
+      return $receiver.removeEventListener(type, listener);
     },
     "%": "MediaStream;EventTarget"
   },
@@ -7521,18 +7532,18 @@ var $$ = {};
     $isEfficientLength: true
   },
   FixedSizeListIterator: {
-    "": "Object;_array,_html$_length,_position,_html$_current",
+    "": "Object;_array,_html$_length,_html$_position,_html$_current",
     moveNext$0: function() {
       var nextPosition, t1;
-      nextPosition = this._position + 1;
+      nextPosition = this._html$_position + 1;
       t1 = this._html$_length;
       if (nextPosition < t1) {
         this._html$_current = J.$index$asx(this._array, nextPosition);
-        this._position = nextPosition;
+        this._html$_position = nextPosition;
         return true;
       }
       this._html$_current = null;
-      this._position = t1;
+      this._html$_position = t1;
       return false;
     },
     get$current: function() {
@@ -8303,27 +8314,36 @@ var $$ = {};
     output.textContent = t1.length !== 0 ? t1 + "\n- - - - - -\n" + H.S(msg) : msg;
   },
   connect: [function($event) {
-    var t1, t2, payload;
-    t1 = $.get$myNameText();
-    if (J.get$isEmpty$asx(J.get$value$x(t1))) {
+    var t1;
+    if (J.get$isEmpty$asx(J.get$value$x($.get$myNameText()))) {
       window.alert("Please enter your name.");
       return;
     }
-    t2 = P.Uri_base();
-    t2 = W.WebSocket_WebSocket("ws://" + H.S(t2.get$host(t2)) + ":8080/dartgame/controller", null);
-    $.webSocket = t2;
-    if (t2.readyState === 1) {
-      payload = C.C_JsonCodec.encode$1(new F.ConnectMessage(J.get$value$x(t1), P.DateTime$_now(), "Spieler 1", "CONNECT").getBaseMap$0());
-      $.webSocket.send(payload);
-      J.set$disabled$x($.get$connectButton(), true);
-      J.set$disabled$x(t1, true);
-    } else
-      window.alert("Could not connect to Server.");
+    t1 = P.Uri_base();
+    t1 = W.WebSocket_WebSocket("ws://" + H.S(t1.get$host(t1)) + ":8080/dartgame/controller", null);
+    $.webSocket = t1;
+    t1 = H.setRuntimeTypeInfo(new W._EventStream(t1, C.EventStreamProvider_close._eventType, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.onCloseConnectError$closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = $.webSocket;
+    t1.toString;
+    t1 = H.setRuntimeTypeInfo(new W._EventStream(t1, C.EventStreamProvider_open._eventType, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = $.webSocket;
+    t1.toString;
+    t1 = H.setRuntimeTypeInfo(new W._EventStream(t1, C.EventStreamProvider_error._eventType, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure0()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = $.webSocket;
     t1.toString;
     t1 = H.setRuntimeTypeInfo(new W._EventStream(t1, C.EventStreamProvider_message._eventType, false), [null]);
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.connect_closure1()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   }, "call$1", "connect$closure", 2, 0, 11],
+  onCloseConnectError: [function(e) {
+    window.alert("Could not connect to Server.");
+  }, "call$1", "onCloseConnectError$closure", 2, 0, 12],
+  onCloseServerClose: [function(e) {
+    window.alert("Connection to Server lost. Please reload.");
+    N.disableControls();
+  }, "call$1", "onCloseServerClose$closure", 2, 0, 12],
   getCannonPos: function(landscape, posX) {
     var t1, t2;
     t1 = J.getInterceptor$asx(landscape);
@@ -8335,13 +8355,13 @@ var $$ = {};
     return H.setRuntimeTypeInfo(new P.Point(posX / t2, t1.$index(landscape, posX)), [null]);
   },
   main_closure: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       return N.updateCannon($.get$myCannon());
     }
   },
   main_closure0: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       var t1, t2, t3;
       t1 = $.get$angleSlider();
@@ -8356,7 +8376,7 @@ var $$ = {};
     }
   },
   main_closure1: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       var t1, t2, t3;
       t1 = $.get$angleSlider();
@@ -8371,13 +8391,13 @@ var $$ = {};
     }
   },
   main_closure2: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       return N.updateCannon($.get$myCannon());
     }
   },
   main_closure3: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       var t1, t2, t3;
       t1 = $.get$powerSlider();
@@ -8392,7 +8412,7 @@ var $$ = {};
     }
   },
   main_closure4: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       var t1, t2, t3;
       t1 = $.get$powerSlider();
@@ -8407,7 +8427,7 @@ var $$ = {};
     }
   },
   main_closure5: {
-    "": "Closure:14;",
+    "": "Closure:15;",
     call$1: function(e) {
       var t1, payload;
       t1 = $.get$myCannon();
@@ -8417,7 +8437,29 @@ var $$ = {};
     }
   },
   connect_closure: {
-    "": "Closure:26;",
+    "": "Closure:15;",
+    call$1: function(e) {
+      var t1, payload;
+      J.removeEventListener$2$x($.webSocket, "close", N.onCloseConnectError$closure());
+      t1 = $.webSocket;
+      t1.toString;
+      t1 = H.setRuntimeTypeInfo(new W._EventStream(t1, C.EventStreamProvider_close._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.onCloseServerClose$closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+      t1 = $.get$myNameText();
+      payload = C.C_JsonCodec.encode$1(new F.ConnectMessage(J.get$value$x(t1), P.DateTime$_now(), "Spieler 1", "CONNECT").getBaseMap$0());
+      $.webSocket.send(payload);
+      J.set$disabled$x($.get$connectButton(), true);
+      J.set$disabled$x(t1, true);
+    }
+  },
+  connect_closure0: {
+    "": "Closure:15;",
+    call$1: function(e) {
+      window.alert("on error");
+    }
+  },
+  connect_closure1: {
+    "": "Closure:27;",
     call$1: function(e) {
       var t1, message, t2, t3, cannonLeftPos, cannonRightPos, enemyName, t4, t5, tempCanvas, t6, t7, angle, power;
       t1 = J.getInterceptor$x(e);
@@ -8488,6 +8530,11 @@ var $$ = {};
             N.drawShotCurve($.rightCannon, $.get$rightFlightpathCanvas());
           }
         }
+        if (J.$eq(t2.$index(message, "messageType"), "STATUS"))
+          if (J.$eq(t2.$index(message, "messageType"), "STATUS")) {
+            window.alert("Player has left. Please relaod.");
+            N.disableControls();
+          }
         if (J.$eq(t2.$index(message, "messageType"), "CONNECT"))
           N.outputMsg("Not Supported by Client!");
       }
@@ -8522,7 +8569,7 @@ var $$ = {};
     }
   },
   convertNativeToDart_AcceptStructuredClone_readSlot: {
-    "": "Closure:27;copies_2",
+    "": "Closure:28;copies_2",
     call$1: function(i) {
       var t1 = this.copies_2;
       if (i >= t1.length)
@@ -8531,7 +8578,7 @@ var $$ = {};
     }
   },
   convertNativeToDart_AcceptStructuredClone_writeSlot: {
-    "": "Closure:28;copies_3",
+    "": "Closure:29;copies_3",
     call$2: function(i, x) {
       var t1 = this.copies_3;
       if (i >= t1.length)
@@ -8540,7 +8587,7 @@ var $$ = {};
     }
   },
   convertNativeToDart_AcceptStructuredClone_walk: {
-    "": "Closure:14;mustCopy_4,findSlot_5,readSlot_6,writeSlot_7",
+    "": "Closure:15;mustCopy_4,findSlot_5,readSlot_6,writeSlot_7",
     call$1: function(e) {
       var slot, copy, t1, key, $length, t2, i;
       if (e == null)
@@ -8636,16 +8683,22 @@ W.Node.$isObject = true;
 J.JSString.$isString = true;
 J.JSString.$isObject = true;
 J.JSNumber.$isObject = true;
-P.Object.$isObject = true;
 P.Duration.$isDuration = true;
 P.Duration.$isObject = true;
+P.Object.$isObject = true;
 J.JSArray.$isObject = true;
+W.Event.$isEvent = true;
 W.Event.$isObject = true;
 W.MouseEvent.$isMouseEvent = true;
+W.MouseEvent.$isEvent = true;
 W.MouseEvent.$isObject = true;
 W.KeyboardEvent.$isKeyboardEvent = true;
+W.KeyboardEvent.$isEvent = true;
 W.KeyboardEvent.$isObject = true;
+W.CloseEvent.$isEvent = true;
+W.CloseEvent.$isObject = true;
 W.MessageEvent.$isMessageEvent = true;
+W.MessageEvent.$isEvent = true;
 W.MessageEvent.$isObject = true;
 J.JSBool.$isbool = true;
 J.JSBool.$isObject = true;
@@ -8664,6 +8717,8 @@ P.StreamSubscription.$isStreamSubscription = true;
 P.StreamSubscription.$isObject = true;
 P._EventSink.$is_EventSink = true;
 P._EventSink.$isObject = true;
+P.Function.$isFunction = true;
+P.Function.$isObject = true;
 P.DateTime.$isDateTime = true;
 P.DateTime.$isObject = true;
 W.Element.$isElement = true;
@@ -8837,6 +8892,9 @@ J.get$valueAsNumber$x = function(receiver) {
 J.get$width$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$width(receiver);
 };
+J.removeEventListener$2$x = function(receiver, a0, a1) {
+  return J.getInterceptor$x(receiver).removeEventListener$2(receiver, a0, a1);
+};
 J.removeEventListener$3$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).removeEventListener$3(receiver, a0, a1, a2);
 };
@@ -8874,8 +8932,11 @@ C.CanvasRenderingContext2D_methods = W.CanvasRenderingContext2D.prototype;
 C.Duration_0 = new P.Duration(0);
 C.EventStreamProvider_change = new W.EventStreamProvider("change");
 C.EventStreamProvider_click = new W.EventStreamProvider("click");
+C.EventStreamProvider_close = new W.EventStreamProvider("close");
+C.EventStreamProvider_error = new W.EventStreamProvider("error");
 C.EventStreamProvider_keypress = new W.EventStreamProvider("keypress");
 C.EventStreamProvider_message = new W.EventStreamProvider("message");
+C.EventStreamProvider_open = new W.EventStreamProvider("open");
 C.JSArray_methods = J.JSArray.prototype;
 C.JSInt_methods = J.JSInt.prototype;
 C.JSNull_methods = J.JSNull.prototype;
@@ -9253,6 +9314,7 @@ init.metadata = [{func: "dynamic__String", args: [J.JSString]},
 {func: "int__Object", ret: J.JSInt, args: [P.Object]},
 {func: "void__KeyboardEvent", void: true, args: [W.KeyboardEvent]},
 {func: "void__MouseEvent", void: true, args: [W.MouseEvent]},
+{func: "void__Event", void: true, args: [W.Event]},
 {func: "args0"},
 {func: "args2", args: [null, null]},
 {func: "args1", args: [null]},

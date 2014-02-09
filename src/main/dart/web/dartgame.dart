@@ -311,7 +311,12 @@ void connect(MouseEvent event) {
   
   webSocket = new WebSocket('ws://${Uri.base.host}:8080/dartgame/controller');
   
-  if (webSocket != null && webSocket.readyState == WebSocket.OPEN) {
+  webSocket.onClose.listen(onCloseConnectError);
+  
+  webSocket.onOpen.listen((e) {
+    webSocket.removeEventListener('close', onCloseConnectError);
+    webSocket.onClose.listen(onCloseServerClose);
+    
     ConnectMessage connectMessage = new ConnectMessage(myNameText.value);
     String payload = connectMessage.toJson();
     webSocket.sendString(payload);
@@ -319,9 +324,11 @@ void connect(MouseEvent event) {
     // Disable connect button and name text input element
     connectButton.disabled = true;
     myNameText.disabled = true;
-  } else {
-    window.alert("Could not connect to Server.");
-  }
+  });
+  
+  webSocket.onError.listen((e) {
+    window.alert("on error");
+  });
   
   webSocket.onMessage.listen((MessageEvent e) {
     Map message = JSON.decode(e.data);
@@ -377,6 +384,12 @@ void connect(MouseEvent event) {
           drawShotCurve(rightCannon, rightFlightpathCanvas);
         }
       }
+      if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_STATUS){
+        if (message["messageType"] == "STATUS") {
+          window.alert("Player has left. Please relaod.");
+          disableControls();
+        }
+      }
       if(message["messageType"] == MessageTypesEnum.MESSAGE_TYPE_CONNECT){
         outputMsg("Not Supported by Client!");
       }
@@ -385,6 +398,14 @@ void connect(MouseEvent event) {
   });
 }
 
+void onCloseConnectError(Event e) {
+  window.alert("Could not connect to Server.");
+}
+
+void onCloseServerClose(Event e) {
+  window.alert("Connection to Server lost. Please reload.");
+  disableControls();
+}
 
 class Cannon {
   Point pos = new Point(0,0);

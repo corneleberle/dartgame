@@ -6,12 +6,12 @@ class MessageTypesEnum{
   static const MESSAGE_TYPE_INIT = "INIT";
   static const MESSAGE_TYPE_SHOT_REQUEST = "SHOT_REQUEST";
   static const MESSAGE_TYPE_SHOT = "SHOT";
+  static const MESSAGE_TYPE_STATUS = "STATUS";
 }
 
 class PlayerTypeEnum{
   static const LEFT = "LEFT";
   static const RIGHT = "RIGHT";
-
 }
 
 abstract class AbstractMessage {

@@ -27,7 +27,13 @@ public class MessageServiceImpl implements MessageService {
 			TextMessage textMessage = new TextMessage(payload);
 
 			for (WebSocketSession session : sessions) {
-				session.sendMessage(textMessage);
+				if (session.isOpen()) {
+					try {
+						session.sendMessage(textMessage);
+					} catch (IllegalStateException e) {
+						System.out.println("Error while sending message: " + e.getMessage());
+					}
+				}
 			}
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
