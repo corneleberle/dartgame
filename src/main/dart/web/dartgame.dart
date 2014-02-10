@@ -53,8 +53,6 @@ final CanvasElement endCanvas = new CanvasElement(width: CANVAS_WIDTH, height: C
 WebSocket webSocket = null;
 List<num> landscape = new List(1000);
 
-Map<Timer, Shot> shots = new Map<Timer, Shot>();
-
 final myCannon = new Cannon();
 final enemyCannon = new Cannon();
 Cannon leftCannon;
@@ -141,67 +139,47 @@ void drawCannon(Cannon cannon) {
 }
 
 void drawShotCurve(Cannon cannon, CanvasElement canvas) {
-  bool reset = true;
-  for (Shot shot in  shots.values) {
-    if (shot.canvas == canvas) {
-      reset = false;
-      break;
-    }
-  }
-  
-  if (reset) {
-  canvas.context2D
-    ..clearRect(0, 0, canvas.width, canvas.height);
-  }
-  
-  Shot s = new Shot(cannon, canvas, cannon.power, cannon.angle);
-  Timer t = new Timer.periodic(new Duration(milliseconds: 1), drawNextShotDot);
-  shots[t] = s;
-  //window.alert(t.isActive.toString() + " active");
-}
-
-void drawNextShotDot(Timer timer) {
-  Shot s = shots[timer];
-  
+  num time = 0;
+  num x = 0;
+  num y = 0;
   bool flying = true;
-  
-  num i = s.currentI;
-  num time = i * 0.001;
     
-  // Normalized position
-  num x = s.cannon.pos.x + (POWER_FACTOR * s.power * time * cos(s.angle) + WIND_FACTOR * wind * time);
-  num y = s.cannon.pos.y + (POWER_FACTOR * s.power * time * sin(s.angle) - GRAVITY_FACTOR * time * time) * SCALE_X / SCALE_Y;
+  canvas.context2D
+      ..clearRect(0, 0, canvas.width, canvas.height);
   
-  if (x<=0 || x>=1 || y<0) {
-    flying = false;
-  } else if (hitGround(x,y)) {
-    flying = false;
-    drawCircle(s.canvas, scaleX(x), scaleY(y), HIT_COLOR, CANVAS_WIDTH * HIT_TOLERANCE);
+  num i = 0;
+  do {
+    time = i * 0.001;
+    
+    // Normalized position
+    x = cannon.pos.x + (POWER_FACTOR * cannon.power * time * cos(cannon.angle) + WIND_FACTOR * wind * time);
+    y = cannon.pos.y + (POWER_FACTOR * cannon.power * time * sin(cannon.angle) - GRAVITY_FACTOR * time * time) * SCALE_X / SCALE_Y;
+    
+    if (x<=0 || x>=1 || y<0) {
+      flying = false;
+    } else if (hitGround(x,y)) {
+      flying = false;
+      drawCircle(canvas, scaleX(x), scaleY(y), HIT_COLOR, CANVAS_WIDTH * HIT_TOLERANCE);
 
-    if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
-      activateControls(false);
-      drawEnd("Loser");
-      triggerButton.disabled = true;
-    } else if ((x - enemyCannon.pos.x).abs() < HIT_TOLERANCE) {
-      activateControls(false);
-      drawEnd("Winner");
-    } 
-      
-  }
-  
-  if (i % 25 == 0) {
-    drawCircle(s.canvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
-  }
-  
-  i += 1;
-  s.currentI = i;
+      if ((x - myCannon.pos.x).abs() < HIT_TOLERANCE) {
+        activateControls(false);
+        drawEnd("Loser");
+        triggerButton.disabled = true;
+      } else if ((x - enemyCannon.pos.x).abs() < HIT_TOLERANCE) {
+        activateControls(false);
+        drawEnd("Winner");
+      } 
+        
+    }
+    
+    if (i % 25 == 0) {
+      drawCircle(canvas, scaleX(x), scaleY(y), SHOT_COLOR, 1);
+    }
+    
+    i += 1;
+  } while (flying);
   
   redrawCanvas();
-  
-  if (flying == false) {
-    timer.cancel();
-    shots.remove(timer);
-  }
 }
 
 void activateControls(bool state) {
@@ -451,16 +429,6 @@ Point getCannonPos(List<double> landscape, int posX) {
   double x = posX / landscape.length;
   double y = landscape[posX];
   return new Point(x, y);
-}
-
-class Shot {
-  Cannon cannon;
-  CanvasElement canvas;
-  double power;
-  double angle;
-  num currentI = 0;
-  
-  Shot(this.cannon, this.canvas, this.power, this.angle); 
 }
 
 
